@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KOT</string>
+
+    <!--string name="action_about">About</string-->
+    <string name="register">Register Here</string>
+    <string name="txt_dismiss">Dismiss</string>
+    <string name="btn_link_to_register">Not  a member? Sign up now.</string>
+</resources>
