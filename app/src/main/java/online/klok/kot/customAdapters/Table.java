@@ -1,16 +1,17 @@
 package online.klok.kot.customAdapters;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
@@ -31,18 +32,16 @@ import java.util.List;
 import online.klok.kot.R;
 import online.klok.kot.models.TableModel;
 
-public class Table extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Table extends AppCompatActivity {
 
-    private Spinner spinnerFood;
-    private Button okButton;
+    private ListView lvUsers;
     private ProgressDialog dialog;
-    private List<TableModel> tableModelList = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_table);
+        setContentView(R.layout.activity_sub);
 
         Intent intent = getIntent();
         int floorId = intent.getIntExtra("parameter_name", 1);
@@ -52,64 +51,9 @@ public class Table extends AppCompatActivity implements AdapterView.OnItemSelect
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        spinnerFood = (Spinner) findViewById(R.id.spinFood);
-        okButton = (Button) findViewById(R.id.bOk);
-        // spinner item select listener
-        spinnerFood.setOnItemSelectedListener(this);
-
+        lvUsers = (ListView) findViewById(R.id.lvUsers);
         String url = "http://146.185.178.83/resttest/floor/" + floorId  +"/tables/";
         new JSONTask().execute(url);
-    }
-
-    private void populateSpinner() {
-        List<String> lables = new ArrayList<String>();
-
-        for (int i = 0; i < tableModelList.size(); i++) {
-            lables.add(tableModelList.get(i).getName());
-        }
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lables);
-
-        // Drop down layout style - list view with radio button
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerFood.setAdapter(spinnerAdapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        TableModel tableModel = tableModelList.get(position);
-        displayTableInformation(tableModel);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
-
-    private void displayTableInformation(TableModel tableModel) {
-
-
-        //get references to your views
-        TextView tvTableId = (TextView) findViewById(R.id.tvTableId);
-
-//        final int categoryId = tableModel.getId();
-
-
-        //set values from your categoriesModel java object to textView
-        tvTableId.setText("Id :  " + tableModel.getId());
-
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Table.this, Categories.class);
-//                intent.putExtra("parameter_name", categoryId);
-                startActivity(intent);
-            }
-        });
     }
 
     public class JSONTask extends AsyncTask<String, String, List<TableModel>> {
@@ -150,6 +94,7 @@ public class Table extends AppCompatActivity implements AdapterView.OnItemSelect
 //                StringBuffer finalBufferData = new StringBuffer();
                 // for loop so it fetch all the json_object in the json_array
 
+                List<TableModel> tableModelList = new ArrayList<>();
 
                 Gson gson = new Gson();
                 for (int i = 0; i < parentArray.length(); i++) {
@@ -184,8 +129,50 @@ public class Table extends AppCompatActivity implements AdapterView.OnItemSelect
         protected void onPostExecute(List<TableModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-            populateSpinner();
-//            TODO need to set the data to the list
+            TableAdapter adapter = new TableAdapter(getApplicationContext(), R.layout.row_table, result);
+            lvUsers.setAdapter(adapter);
+        }
+    }
+    public class TableAdapter extends ArrayAdapter {
+
+        public List<TableModel> tableModelList;
+        private int resource;
+        private LayoutInflater inflater;
+        public TableAdapter(Context context, int resource, List<TableModel> objects) {
+            super(context, resource, objects);
+            tableModelList = objects;
+            this.resource = resource;
+            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+
+            if(convertView == null){
+                holder = new ViewHolder();
+                convertView=inflater.inflate(resource, null);
+                holder.bTableNo = (Button) convertView.findViewById(R.id.bTableNo);
+                convertView.setTag(holder);
+            }else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.bTableNo.setText(tableModelList.get(position).getName());
+            holder.bTableNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Table.this, Categories.class);
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        class ViewHolder{
+            private Button bTableNo;
         }
     }
 }

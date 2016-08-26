@@ -7,30 +7,13 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:weightSum="1"
-    tools:context="online.klok.restapp.customAdapters.Items">
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Select Item" />
-
-    <Spinner
-        android:id="@+id/spinFood"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tvItemId"
-        android:layout_width="129dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.04"
-        android:text="itemId" />
+    tools:context="online.klok.kot.customAdapters.Items">
 
     <Button
-        android:id="@+id/bOk"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Ok" />
+        android:text="Item Name"
+        android:id="@+id/bItem"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

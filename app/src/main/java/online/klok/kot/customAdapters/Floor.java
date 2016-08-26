@@ -1,16 +1,17 @@
 package online.klok.kot.customAdapters;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.GridView;
 
 import com.google.gson.Gson;
 
@@ -34,79 +35,22 @@ import online.klok.kot.models.FloorModel;
 /**
  * Created by klok on 22/8/16.
  */
-public class Floor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Floor extends AppCompatActivity {
 
-    private Spinner spinnerFood;
+    private GridView gridView;
     private ProgressDialog dialog;
-    private Button okButton;
-    private List<FloorModel> floorModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_floor);
+        setContentView(R.layout.grid_view);
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        spinnerFood = (Spinner) findViewById(R.id.spinFood);
-        okButton = (Button) findViewById(R.id.bOk);
-        spinnerFood = (Spinner) findViewById(R.id.spinFood);
-        spinnerFood.setOnItemSelectedListener(this);
+        gridView = (GridView) findViewById(R.id.gridView);
         new JSONTask().execute("http://146.185.178.83/resttest/floor");
-    }
-
-    private void populateSpinner() {
-        List<String> lables = new ArrayList<String>();
-
-        for (int i = 0; i < floorModelList.size(); i++) {
-            lables.add(floorModelList.get(i).getFloorName());
-        }
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lables);
-
-        // Drop down layout style - list view with radio button
-        spinnerAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerFood.setAdapter(spinnerAdapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        FloorModel floorModel = floorModelList.get(position);
-        displayCategoriesInformation(floorModel);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
-
-    private void displayCategoriesInformation(FloorModel floorModel) {
-
-
-        //get references to your views
-        TextView tvFloorId = (TextView) findViewById(R.id.tvFloorId);
-
-        final int floorId = floorModel.getId();
-
-
-        //set values from your categoriesModel java object to textView
-        tvFloorId.setText("Id :  " + floorModel.getId());
-
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Floor.this, Table.class);
-                intent.putExtra("parameter_name", floorId);
-                startActivity(intent);
-            }
-        });
     }
 
     public class JSONTask extends AsyncTask<String, String, List<FloorModel>> {
@@ -147,6 +91,7 @@ public class Floor extends AppCompatActivity implements AdapterView.OnItemSelect
 //                StringBuffer finalBufferData = new StringBuffer();
                 // for loop so it fetch all the json_object in the json_array
 
+                List<FloorModel> floorModelList = new ArrayList<>();
 
                 Gson gson = new Gson();
                 for (int i = 0; i < parentArray.length(); i++) {
@@ -181,8 +126,55 @@ public class Floor extends AppCompatActivity implements AdapterView.OnItemSelect
         protected void onPostExecute(List<FloorModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-            populateSpinner();
+            FloorAdapter adapter = new FloorAdapter(getApplicationContext(), R.layout.row_floor, result);
+            gridView.setAdapter(adapter);
+//            TODO need to set the data to the list
+        }
+    }
 
+    public class FloorAdapter extends ArrayAdapter {
+
+        public List<FloorModel> floorModelList;
+        private int resource;
+        private LayoutInflater inflater;
+
+        public FloorAdapter(Context context, int resource, List<FloorModel> objects) {
+            super(context, resource, objects);
+            floorModelList = objects;
+            this.resource = resource;
+            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = inflater.inflate(resource, null);
+                holder.bFloorId = (Button) convertView.findViewById(R.id.bFloorId);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.bFloorId.setText(floorModelList.get(position).getFloorId());
+            final int floorId = floorModelList.get(position).getId();
+            holder.bFloorId.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Floor.this, Table.class);
+                    intent.putExtra("parameter_name", floorId);
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        class ViewHolder {
+            private Button bFloorId;
         }
     }
 }

@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import online.klok.kot.customAdapters.Categories;
 import online.klok.kot.customAdapters.Floor;
 import online.klok.kot.customAdapters.Order;
 
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
 
             } else if(mInputText.getText().toString().equals("waiter") && mPasswordText.getText().toString().equals("waiter")) {
-                Intent loginIntent = new Intent(this, Floor.class);
+                Intent loginIntent = new Intent(this, Categories.class);
                 startActivity(loginIntent);
                 finish();
 

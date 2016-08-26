@@ -1,14 +1,22 @@
 package online.klok.kot.customAdapters;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,87 +38,30 @@ import java.util.List;
 
 import online.klok.kot.R;
 import online.klok.kot.models.CategoriesModel;
+import online.klok.kot.models.SubcategoryModel;
 
-public class Categories extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Categories extends AppCompatActivity {
 
-    private Spinner spinnerFood;
-    private Button okButton;
+    private ListView lvUsers;
     private ProgressDialog dialog;
-    private List<CategoriesModel> categoriesModelList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_categories);
+        setContentView(R.layout.activity_sub);
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-//        lvUsers = (ListView)findViewById(R.id.lvUsers);
-        spinnerFood = (Spinner) findViewById(R.id.spinFood);
-        okButton = (Button) findViewById(R.id.bOk);
-        // spinner item select listener
-        spinnerFood.setOnItemSelectedListener(this);
-        new JSONTask().execute("http://146.185.178.83/resttest/categories");
+        lvUsers = (ListView) findViewById(R.id.lvUsers);
+        new JSONTask5().execute("http://146.185.178.83/resttest/categories");
     }
 
-    private void populateSpinner() {
-        List<String> lables = new ArrayList<String>();
-
-        for (int i = 0; i < categoriesModelList.size(); i++) {
-            lables.add(categoriesModelList.get(i).getName());
-        }
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lables);
-
-        // Drop down layout style - list view with radio button
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerFood.setAdapter(spinnerAdapter);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        CategoriesModel categoriesModel = categoriesModelList.get(position);
-        displayCategoriesInformation(categoriesModel);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
-
-    private void displayCategoriesInformation(CategoriesModel categoriesModel) {
-
-
-        //get references to your views
-        TextView tvCategoryId = (TextView) findViewById(R.id.tvCategoryId);
-
-        final int categoryId = categoriesModel.getId();
-
-
-        //set values from your categoriesModel java object to textView
-        tvCategoryId.setText("Id :  " + categoriesModel.getId());
-
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Categories.this, SubCategories.class);
-                intent.putExtra("parameter_name", categoryId);
-                startActivity(intent);
-            }
-        });
-    }
-
-    public class JSONTask extends AsyncTask<String, String, List<CategoriesModel>> {
+    public class JSONTask5 extends AsyncTask<String, String, List<CategoriesModel> > {
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
             dialog.show();
         }
@@ -131,8 +82,8 @@ public class Categories extends AppCompatActivity implements AdapterView.OnItemS
 
                 StringBuffer buffer = new StringBuffer();
 
-                String line = "";
-                while ((line = reader.readLine()) != null) {
+                String line ="";
+                while ((line=reader.readLine()) !=null){
                     buffer.append(line);
                 }
 
@@ -145,6 +96,7 @@ public class Categories extends AppCompatActivity implements AdapterView.OnItemS
 //                StringBuffer finalBufferData = new StringBuffer();
                 // for loop so it fetch all the json_object in the json_array
 
+                List<CategoriesModel> categoriesModelList = new ArrayList<>();
 
                 Gson gson = new Gson();
                 for (int i = 0; i < parentArray.length(); i++) {
@@ -154,18 +106,18 @@ public class Categories extends AppCompatActivity implements AdapterView.OnItemS
                 }
                 return categoriesModelList;
 
-            } catch (MalformedURLException e) {
+            }catch (MalformedURLException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            }catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
-                if (connection != null) {
+                if(connection !=null) {
                     connection.disconnect();
                 }
                 try {
-                    if (reader != null) {
+                    if (reader !=null) {
                         reader.close();
                     }
                 } catch (IOException e) {
@@ -174,15 +126,92 @@ public class Categories extends AppCompatActivity implements AdapterView.OnItemS
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(List<CategoriesModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-//            CategoriesAdapter adapter = new CategoriesAdapter(getApplicationContext(), R.layout.row_categories, result);
-//            lvUsers.setAdapter(adapter);
-            populateSpinner();
+            CategoriesAdapter adapter = new CategoriesAdapter(getApplicationContext(), R.layout.row_categories, result);
+            lvUsers.setAdapter(adapter);
 //            TODO need to set the data to the list
         }
+    }
+    public class CategoriesAdapter extends ArrayAdapter {
+
+        public List<CategoriesModel> categoriesModelList;
+        private int resource;
+        private LayoutInflater inflater;
+        public CategoriesAdapter(Context context, int resource, List<CategoriesModel> objects) {
+            super(context, resource, objects);
+            categoriesModelList = objects;
+            this.resource = resource;
+            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+
+            if(convertView == null){
+                holder = new ViewHolder();
+                convertView=inflater.inflate(resource, null);
+                holder.bCategories = (Button) convertView.findViewById(R.id.bCategories);
+                convertView.setTag(holder);
+            }else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final int categoriesId = categoriesModelList.get(position).getId();
+            holder.bCategories.setText(categoriesModelList.get(position).getName());
+            holder.bCategories.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Categories.this, SubCategories.class);
+                    intent.putExtra("parameter_name", categoriesId);
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        class ViewHolder{
+            private Button bCategories;
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.testmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.action_add_item:
+                addMenuItem();
+                break;
+        }
+        return true;
+    }
+
+    //    private void aboutMenuItem(){
+//        new AlertDialog.Builder(this)
+//                .setTitle("About")
+//                .setMessage("Klok Innovations"+" Copyright 2015 ©. All rights reserved")
+//                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                }).show();
+//    }
+    private void addMenuItem(){
+        Intent intent = new Intent(this, Floor.class);
+        startActivity(intent);
+        finish();
     }
 }

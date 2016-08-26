@@ -1,16 +1,17 @@
 package online.klok.kot.customAdapters;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 
@@ -31,18 +32,17 @@ import java.util.List;
 import online.klok.kot.R;
 import online.klok.kot.models.ItemModel;
 
-public class Items extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class Items extends AppCompatActivity {
 
-    private Spinner spinnerFood;
-    private Button okButton;
+    private ListView lvUsers;
     private ProgressDialog dialog;
-    private List<ItemModel> itemModelList = new ArrayList<>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_item);
+        setContentView(R.layout.activity_sub);
 
         Intent intent = getIntent();
         int subCategoryId = intent.getIntExtra("parameter_name", 1);
@@ -51,65 +51,10 @@ public class Items extends AppCompatActivity implements AdapterView.OnItemSelect
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-
-        spinnerFood = (Spinner) findViewById(R.id.spinFood);
-        okButton = (Button) findViewById(R.id.bOk);
-        // spinner item select listener
-        spinnerFood.setOnItemSelectedListener(this);
-
-
+        lvUsers = (ListView) findViewById(R.id.lvUsers);
         String url = "http://146.185.178.83/resttest/subCategories/" + subCategoryId  +"/items/";
         new JSONTask().execute(url);
 
-    }
-    private void populateSpinner() {
-        List<String> lables = new ArrayList<String>();
-
-        for (int i = 0; i < itemModelList.size(); i++) {
-            lables.add(itemModelList.get(i).getItemName());
-        }
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lables);
-
-        // Drop down layout style - list view with radio button
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerFood.setAdapter(spinnerAdapter);
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ItemModel itemModel = itemModelList.get(position);
-        displaySubcategoryInformation(itemModel);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
-
-    private void displaySubcategoryInformation(ItemModel itemModel) {
-
-
-        //get references to your views
-        TextView tvItemId = (TextView) findViewById(R.id.tvItemId);
-
-        final String itemName = itemModel.getItemName();
-
-
-        //set values from your subCategoryModel java object to textView
-        tvItemId.setText("id :  " + itemModel.getId());
-
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Items.this, DisplayInfo.class);
-                intent.putExtra("parameter_name", itemName);
-                startActivity(intent);
-            }
-        });
     }
 
     public class JSONTask extends AsyncTask<String, String, List<ItemModel> > {
@@ -150,6 +95,7 @@ public class Items extends AppCompatActivity implements AdapterView.OnItemSelect
 //                StringBuffer finalBufferData = new StringBuffer();
                 // for loop so it fetch all the json_object in the json_array
 
+                List<ItemModel> itemModelList = new ArrayList<>();
 
                 Gson gson = new Gson();
                 for (int i = 0; i < parentArray.length(); i++) {
@@ -183,9 +129,52 @@ public class Items extends AppCompatActivity implements AdapterView.OnItemSelect
         protected void onPostExecute(List<ItemModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-            populateSpinner();
-//            TODO need to set the data to the list
+            ItemAdapter adapter = new ItemAdapter(getApplicationContext(), R.layout.row_item, result);
+            lvUsers.setAdapter(adapter);
         }
     }
+    public class ItemAdapter extends ArrayAdapter {
 
+        public List<ItemModel> itemModelList;
+        private int resource;
+        private LayoutInflater inflater;
+        public ItemAdapter(Context context, int resource, List<ItemModel> objects) {
+            super(context, resource, objects);
+            itemModelList = objects;
+            this.resource = resource;
+            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+
+            if(convertView == null){
+                holder = new ViewHolder();
+                convertView=inflater.inflate(resource, null);
+                holder.bItem = (Button) convertView.findViewById(R.id.bItem);
+                convertView.setTag(holder);
+            }else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.bItem.setText(itemModelList.get(position).getItemName());
+            final String itemName = itemModelList.get(position).getItemName();
+            holder.bItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Items.this, DisplayInfo.class);
+                    intent.putExtra("parameter_name", itemName );
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        class ViewHolder{
+            private Button bItem;
+        }
+    }
 }
