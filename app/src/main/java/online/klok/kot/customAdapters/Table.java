@@ -4,14 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -153,14 +154,15 @@ public class Table extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
-                holder.bTableNo = (Button) convertView.findViewById(R.id.bTableNo);
+                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+                holder.tvTableNo = (TextView) convertView.findViewById(R.id.tvTableNo);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.bTableNo.setText(tableModelList.get(position).getName());
-            holder.bTableNo.setOnClickListener(new View.OnClickListener() {
+            holder.tvTableNo.setText(tableModelList.get(position).getName());
+            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -172,7 +174,8 @@ public class Table extends AppCompatActivity {
         }
 
         class ViewHolder{
-            private Button bTableNo;
+            private LinearLayout clickLayout;
+            private TextView tvTableNo;
         }
     }
 }

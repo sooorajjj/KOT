@@ -10,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -155,15 +156,18 @@ public class SubCategories extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
-                holder.bSubCategory = (Button) convertView.findViewById(R.id.bSubCategory);
+                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+                holder.tvSubCategoryName = (TextView) convertView.findViewById(R.id.tvSubCategoryName);
+                holder.tvShortName = (TextView) convertView.findViewById(R.id.tvShortName);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.bSubCategory.setText(subcategoryModelList.get(position).getName());
+            holder.tvSubCategoryName.setText(subcategoryModelList.get(position).getName());
+            holder.tvShortName.setText(subcategoryModelList.get(position).getShortName());
             final int subcategoryId = subcategoryModelList.get(position).getId();
-            holder.bSubCategory.setOnClickListener(new View.OnClickListener() {
+            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -176,7 +180,9 @@ public class SubCategories extends AppCompatActivity {
         }
 
         class ViewHolder{
-            private Button bSubCategory;
+            private LinearLayout clickLayout;
+            private TextView tvSubCategoryName;
+            private TextView tvShortName;
 
 
         }

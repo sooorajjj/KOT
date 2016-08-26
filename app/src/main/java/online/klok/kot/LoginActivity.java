@@ -1,27 +1,24 @@
 package online.klok.kot;
 
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-
-
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import online.klok.kot.customAdapters.Floor;
+import online.klok.kot.customAdapters.Order;
 
 /**
  * A login screen that offers login via email/password.
  */
-import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import online.klok.kot.customAdapters.Categories;
-import online.klok.kot.customAdapters.Floor;
-import online.klok.kot.customAdapters.Order;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -100,13 +97,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mPasswordLayout.setError(null);
             }
 
-            if (mInputText.getText().toString().equals("chef") && mPasswordText.getText().toString().equals("chef")) {
-                Intent loginIntent = new Intent(this, Order.class);
+            if (mInputText.getText().toString().equals("waiter") && mPasswordText.getText().toString().equals("waiter")) {
+                Intent loginIntent = new Intent(this, Floor.class);
                 startActivity(loginIntent);
                 finish();
 
-            } else if(mInputText.getText().toString().equals("waiter") && mPasswordText.getText().toString().equals("waiter")) {
-                Intent loginIntent = new Intent(this, Categories.class);
+            } else if (mInputText.getText().toString().equals("chef") && mPasswordText.getText().toString().equals("chef")) {
+                Intent loginIntent = new Intent(this, Order.class);
                 startActivity(loginIntent);
                 finish();
 

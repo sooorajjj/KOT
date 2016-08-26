@@ -10,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -37,19 +38,19 @@ import online.klok.kot.models.FloorModel;
  */
 public class Floor extends AppCompatActivity {
 
-    private GridView gridView;
+    private ListView lvUsers;
     private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grid_view);
+        setContentView(R.layout.activity_sub);
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        gridView = (GridView) findViewById(R.id.gridView);
+        lvUsers = (ListView) findViewById(R.id.lvUsers);
         new JSONTask().execute("http://146.185.178.83/resttest/floor");
     }
 
@@ -127,7 +128,7 @@ public class Floor extends AppCompatActivity {
             super.onPostExecute(result);
             dialog.dismiss();
             FloorAdapter adapter = new FloorAdapter(getApplicationContext(), R.layout.row_floor, result);
-            gridView.setAdapter(adapter);
+            lvUsers.setAdapter(adapter);
 //            TODO need to set the data to the list
         }
     }
@@ -153,15 +154,16 @@ public class Floor extends AppCompatActivity {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(resource, null);
-                holder.bFloorId = (Button) convertView.findViewById(R.id.bFloorId);
+                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+                holder.tvFloorName = (TextView) convertView.findViewById(R.id.tvFloorName);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.bFloorId.setText(floorModelList.get(position).getFloorId());
+            holder.tvFloorName.setText("  Floor :" + floorModelList.get(position).getFloorId());
             final int floorId = floorModelList.get(position).getId();
-            holder.bFloorId.setOnClickListener(new View.OnClickListener() {
+            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -174,7 +176,8 @@ public class Floor extends AppCompatActivity {
         }
 
         class ViewHolder {
-            private Button bFloorId;
+            private LinearLayout clickLayout;
+            private TextView tvFloorName;
         }
     }
 }

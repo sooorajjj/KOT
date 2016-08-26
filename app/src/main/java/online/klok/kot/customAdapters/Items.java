@@ -10,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -153,15 +154,18 @@ public class Items extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
-                holder.bItem = (Button) convertView.findViewById(R.id.bItem);
+                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
+                holder.tvItemName = (TextView) convertView.findViewById(R.id.tvItemName);
+                holder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.bItem.setText(itemModelList.get(position).getItemName());
+            holder.tvItemName.setText(itemModelList.get(position).getItemName());
+            holder.tvDescription.setText("Description:  " + itemModelList.get(position).getDescription());
             final String itemName = itemModelList.get(position).getItemName();
-            holder.bItem.setOnClickListener(new View.OnClickListener() {
+            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -174,7 +178,9 @@ public class Items extends AppCompatActivity {
         }
 
         class ViewHolder{
-            private Button bItem;
+            private LinearLayout clickLayout;
+            private TextView tvItemName;
+            private TextView tvDescription;
         }
     }
 }
