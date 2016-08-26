@@ -38,8 +38,9 @@
         <activity android:name=".customAdapters.SubCategories" />
         <activity android:name=".customAdapters.Master" />
         <activity android:name=".customAdapters.Location" />
-        <activity android:name=".customAdapters.Table"/>
-        <activity android:name=".customAdapters.DisplayInfo"/>
+        <activity android:name=".customAdapters.Table" />
+        <activity android:name=".customAdapters.DisplayInfo" />
+        <activity android:name=".customAdapters.OrderSelected"></activity>
     </application>
 
 </manifest>

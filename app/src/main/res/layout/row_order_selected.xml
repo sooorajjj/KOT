@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="online.klok.kot.customAdapters.OrderSelected">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Id"
+        android:id="@+id/tvId" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvId"
+        android:text="Order Id"
+        android:id="@+id/tvOrderId" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvOrderId"
+        android:text="Order Total"
+        android:id="@+id/tvOrderTotal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvOrderTotal"
+        android:text="Card No"
+        android:id="@+id/tvCardNo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvCardNo"
+        android:text="TotalItemsCount"
+        android:id="@+id/tvTotalItemsCount" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvTotalItemsCount"
+        android:text="Primary Item"
+        android:id="@+id/tvPrimaryItem" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvPrimaryItem"
+        android:text="Extra Item"
+        android:id="@+id/tvExtraItem" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvExtraItem"
+        android:text="Modifier Item"
+        android:id="@+id/tvModifierItem" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvModifierItem"
+        android:text="Location Id"
+        android:id="@+id/tvLocationId" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvLocationId"
+        android:text="Time"
+        android:id="@+id/tvTime" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvTime"
+        android:text="Date"
+        android:id="@+id/tvDate" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvDate"
+        android:text="created_at"
+        android:id="@+id/tvCreated_at" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/tvCreated_at"
+        android:text="updated_at"
+        android:id="@+id/tvUpdated_at" />
+
+</RelativeLayout>

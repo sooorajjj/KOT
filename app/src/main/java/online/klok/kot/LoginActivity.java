@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
             if (mInputText.getText().toString().equals("chef") && mPasswordText.getText().toString().equals("chef")) {
-                Intent loginIntent = new Intent(this, Floor.class);
+                Intent loginIntent = new Intent(this, Order.class);
                 startActivity(loginIntent);
                 finish();
 

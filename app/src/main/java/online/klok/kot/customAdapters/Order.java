@@ -2,6 +2,7 @@ package online.klok.kot.customAdapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -147,55 +148,28 @@ public class Order extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
-                holder.tvId = (TextView)convertView.findViewById(R.id.tvId);
-                holder.tvOrderId = (TextView)convertView.findViewById(R.id.tvOrderId);
-                holder.tvOrderTotal = (TextView)convertView.findViewById(R.id.tvOrderTotal);
-                holder.tvCardNo = (TextView)convertView.findViewById(R.id.tvCardNo);
-                holder.tvTotalItemsCount= (TextView)convertView.findViewById(R.id.tvTotalItemsCount);
-                holder.tvPrimaryItem = (TextView)convertView.findViewById(R.id.tvPrimaryItem);
-                holder.tvExtraItem = (TextView)convertView.findViewById(R.id.tvExtraItem);
-                holder.tvModifierItem = (TextView)convertView.findViewById(R.id.tvModifierItem);
-                holder.tvLocationId = (TextView)convertView.findViewById(R.id.tvLocationId);
-                holder.tvTime = (TextView)convertView.findViewById(R.id.tvTime);
-                holder.tvDate = (TextView)convertView.findViewById(R.id.tvDate);
-                holder.tvCreated_at = (TextView)convertView.findViewById(R.id.tvCreated_at);
-                holder.tvUpdated_at = (TextView)convertView.findViewById(R.id.tvUpdated_at);
+                holder.bOrderNo = (Button) convertView.findViewById(R.id.bOrderNo);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.tvId.setText("Id: " + orderModelList.get(position).getId());
-            holder.tvOrderId.setText("Order Id: " + orderModelList.get(position).getOrderId());
-            holder.tvOrderTotal.setText("Order Total: " + orderModelList.get(position).getOrderTotal());
-            holder.tvCardNo.setText("Card No: " + orderModelList.get(position).getCardNo());
-            holder.tvTotalItemsCount.setText("TotalItemsCount: " + orderModelList.get(position).getTotalItemsCount());
-            holder.tvPrimaryItem.setText("Primary Item: " + orderModelList.get(position).getPrimaryItem());
-            holder.tvExtraItem.setText("Extra Item: " + orderModelList.get(position).getExtraItem());
-            holder.tvModifierItem.setText("Modifier Item: " + orderModelList.get(position).getModifierItem());
-            holder.tvLocationId.setText("Location Id: " + orderModelList.get(position).getLocationId());
-            holder.tvTime.setText("Time: " + orderModelList.get(position).getTime());
-            holder.tvDate.setText("Date: " + orderModelList.get(position).getDate());
-            holder.tvCreated_at.setText("Created On: " + orderModelList.get(position).getCreated_at());
-            holder.tvUpdated_at.setText("Updated On: " + orderModelList.get(position).getUpdated_at());
+            final int orderId = orderModelList.get(position).getId();
+            holder.bOrderNo.setText("Order No: " + orderModelList.get(position).getOrderId());
+            holder.bOrderNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Order.this, OrderSelected.class);
+                    intent.putExtra("parameter_name", orderId);
+                    startActivity(intent);
+                }
+            });
             return convertView;
         }
 
         class ViewHolder{
-            private TextView tvId;
-            private TextView tvOrderId;
-            private TextView tvOrderTotal;
-            private TextView tvCardNo;
-            private TextView tvTotalItemsCount;
-            private TextView tvPrimaryItem;
-            private TextView tvExtraItem;
-            private TextView tvModifierItem;
-            private TextView tvTime;
-            private TextView tvDate;
-            private TextView tvLocationId;
-            private TextView tvCreated_at;
-            private TextView tvUpdated_at;
-
+            private Button bOrderNo;
         }
     }
 }
