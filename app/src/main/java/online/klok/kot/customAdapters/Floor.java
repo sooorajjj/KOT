@@ -161,7 +161,7 @@ public class Floor extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.tvFloorName.setText("  Floor :" + floorModelList.get(position).getFloorId());
+            holder.tvFloorName.setText(floorModelList.get(position).getFloorId());
             final int floorId = floorModelList.get(position).getId();
             holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
