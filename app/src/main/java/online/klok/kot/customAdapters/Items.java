@@ -165,12 +165,14 @@ public class Items extends AppCompatActivity {
             holder.tvItemName.setText(itemModelList.get(position).getItemName());
             holder.tvDescription.setText("Description:  " + itemModelList.get(position).getDescription());
             final String itemName = itemModelList.get(position).getItemName();
+            final String salesRate = itemModelList.get(position).getSalesRate();
             holder.clickLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     Intent intent = new Intent(Items.this, DisplayInfo.class);
-                    intent.putExtra("parameter_name", itemName );
+                    intent.putExtra("itemName", itemName);
+                    intent.putExtra("salesRate", salesRate);
                     startActivity(intent);
                 }
             });

@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,44 +48,10 @@ public class Categories extends AppCompatActivity {
         dialog.setMessage("Loading, please wait.....");
 
         lvUsers = (ListView) findViewById(R.id.lvUsers);
-        new JSONTask5().execute("http://146.185.178.83/resttest/categories");
+        new JSONTask().execute("http://146.185.178.83/resttest/categories");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.testmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case R.id.action_add_item:
-                addMenuItem();
-                break;
-        }
-        return true;
-    }
-
-    //    private void aboutMenuItem(){
-//        new AlertDialog.Builder(this)
-//                .setTitle("About")
-//                .setMessage("Klok Innovations"+" Copyright 2015 ©. All rights reserved")
-//                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                }).show();
-//    }
-    private void addMenuItem() {
-        Intent intent = new Intent(this, Floor.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public class JSONTask5 extends AsyncTask<String, String, List<CategoriesModel>> {
+    public class JSONTask extends AsyncTask<String, String, List<CategoriesModel>> {
 
         @Override
         protected void onPreExecute() {
