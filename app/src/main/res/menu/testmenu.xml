@@ -10,4 +10,11 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_add_item" />
 
+    <item
+        android:id="@+id/action_show_cart"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/shopping_cart__round_"
+        android:title="@string/menu_show_cart" />
+
 </menu>

@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -154,35 +156,57 @@ public class Items extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
-                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
                 holder.tvItemName = (TextView) convertView.findViewById(R.id.tvItemName);
-                holder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+                holder.tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
             holder.tvItemName.setText(itemModelList.get(position).getItemName());
-            holder.tvDescription.setText("Description:  " + itemModelList.get(position).getDescription());
+            holder.tvPrice.setText("Rs " + itemModelList.get(position).getSalesRate());
             final String itemName = itemModelList.get(position).getItemName();
             final String salesRate = itemModelList.get(position).getSalesRate();
-            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    Intent intent = new Intent(Items.this, DisplayInfo.class);
-                    intent.putExtra("itemName", itemName);
-                    intent.putExtra("salesRate", salesRate);
-                    startActivity(intent);
-                }
-            });
+            Intent intent = new Intent(Items.this, CartDisplay.class);
+            intent.putExtra("itemName", itemName);
+            intent.putExtra("salesRate", salesRate);
+
             return convertView;
         }
 
         class ViewHolder{
-            private LinearLayout clickLayout;
             private TextView tvItemName;
-            private TextView tvDescription;
+            private TextView tvPrice;
         }
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem add_item = menu.findItem(R.id.action_add_item);
+        add_item.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.testmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_show_cart:
+                cartMenuItem();
+                break;
+        }
+        return true;
+    }
+
+    private void cartMenuItem() {
+        Intent intent = new Intent(Items.this, CartDisplay.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:weightSum="1">
 
     <LinearLayout
-        android:id="@+id/clickLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -32,16 +32,16 @@
                 android:id="@+id/tvItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Item Name"
+                android:text="ItemName"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/tvPrice"
+                android:id="@+id/tvSalesRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_gravity="right" />
+                android:layout_gravity="center_horizontal"
+                android:text="SalesRate"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <!--<RelativeLayout-->
                 <!--android:layout_width="match_parent"-->
@@ -74,14 +74,13 @@
                     <!--android:id="@+id/tvItemCount"-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignBottom="@+id/bAdd"-->
-                    <!--android:layout_alignParentEnd="false"-->
+                    <!--android:layout_alignBottom="@+id/bLess"-->
+                    <!--android:layout_alignParentEnd="true"-->
                     <!--android:layout_alignParentStart="false"-->
-                    <!--android:text="0"-->
+                    <!--android:text="itemCount"-->
                     <!--android:textAppearance="?android:attr/textAppearanceSmall" />-->
 
             <!--</RelativeLayout>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,7 +98,7 @@
 
                 <EditText
                     android:id="@+id/itemQuantityText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.06"
                     android:enabled="false"
@@ -116,48 +115,57 @@
                     android:padding="2dp"
                     android:backgroundTint="@color/colorPrimaryDark" />
 
-                <android.support.v4.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".05" />
-
-
-                <Button
-                    android:id="@+id/itemAddToCart"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/shopping_cart_add"
-                    android:backgroundTint="@color/colorPrimaryDark" />
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="75dp">
 
-        <EditText
-            android:id="@+id/edit_text_extras_instructions"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-
-            android:layout_weight="1"
-            android:hint="Enter instructions for chef"
-            android:lines="1"
-            android:maxLines="1" />
-
-        <Button
-            android:id="@+id/bSendToKitchen"
+        <TextView
+            android:id="@+id/tvTotalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Total: RS 0.0"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/bToKichen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Send To Kitchen"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/bCheckout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Checkout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear Cart"
+            android:id="@+id/bClearCart"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@color/colorPrimaryDark" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

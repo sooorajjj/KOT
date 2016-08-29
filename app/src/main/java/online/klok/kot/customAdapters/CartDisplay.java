@@ -10,20 +10,23 @@ import android.widget.TextView;
 import online.klok.kot.R;
 
 
-public class DisplayInfo extends AppCompatActivity {
+public class CartDisplay extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_display_info);
+        setContentView(R.layout.row_cart_display);
 
         TextView tvItemName = (TextView) findViewById(R.id.tvItemName);
         TextView tvSalesRate = (TextView) findViewById(R.id.tvSalesRate);
+        TextView tvTotalAmount = (TextView) findViewById(R.id.tvTotalAmount);
+
         Intent intent = getIntent();
 
         String itemName = intent.getStringExtra("itemName");
         tvItemName.setText(itemName);
         String salesRate = intent.getStringExtra("salesRate");
-        tvSalesRate.setText(salesRate);
+        tvSalesRate.setText("RS"+salesRate);
+        tvTotalAmount.setText("Total: RS"+salesRate);
 //        Bundle bundle = intent.getExtras();
 //
 //        if(bundle!=null)
@@ -34,6 +37,12 @@ public class DisplayInfo extends AppCompatActivity {
 //            tvSalesRate.setText(salesRate);
 //        }
 //
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem show_cart = menu.findItem(R.id.action_show_cart);
+        show_cart.setVisible(false);
+        return true;
     }
 
     @Override
