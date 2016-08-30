@@ -43,44 +43,6 @@
                 android:text="SalesRate"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<Button-->
-                    <!--android:id="@+id/bAdd"-->
-                    <!--style="?android:attr/buttonStyleSmall"-->
-                    <!--android:layout_width="35dp"-->
-                    <!--android:layout_height="35dp"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginBottom="4dp"-->
-                    <!--android:background="@drawable/add_new"-->
-                    <!--android:backgroundTint="@color/colorPrimaryDark"-->
-                    <!--android:padding="2dp" />-->
-
-                <!--<Button-->
-                    <!--android:id="@+id/bLess"-->
-                    <!--style="?android:attr/buttonStyleSmall"-->
-                    <!--android:layout_width="35dp"-->
-                    <!--android:layout_height="35dp"-->
-                    <!--android:layout_alignParentEnd="false"-->
-                    <!--android:layout_marginBottom="4dp"-->
-                    <!--android:layout_toEndOf="@id/bAdd"-->
-                    <!--android:background="@drawable/minus"-->
-                    <!--android:backgroundTint="@color/colorPrimaryDark"-->
-                    <!--android:padding="2dp" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvItemCount"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignBottom="@+id/bLess"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_alignParentStart="false"-->
-                    <!--android:text="itemCount"-->
-                    <!--android:textAppearance="?android:attr/textAppearanceSmall" />-->
-
-            <!--</RelativeLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

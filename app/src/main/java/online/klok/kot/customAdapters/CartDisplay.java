@@ -1,12 +1,11 @@
 package online.klok.kot.customAdapters;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import online.klok.kot.R;
 
 
@@ -20,23 +19,17 @@ public class CartDisplay extends AppCompatActivity {
         TextView tvSalesRate = (TextView) findViewById(R.id.tvSalesRate);
         TextView tvTotalAmount = (TextView) findViewById(R.id.tvTotalAmount);
 
-        Intent intent = getIntent();
 
-        String itemName = intent.getStringExtra("itemName");
-        tvItemName.setText(itemName);
-        String salesRate = intent.getStringExtra("salesRate");
-        tvSalesRate.setText("RS"+salesRate);
-        tvTotalAmount.setText("Total: RS"+salesRate);
-//        Bundle bundle = intent.getExtras();
-//
-//        if(bundle!=null)
-//        {
-//            String itemName =(String) bundle.get("itemName");
-//            tvItemName.setText(itemName);
-//            String salesRate =(String) bundle.get("salesRate");
-//            tvSalesRate.setText(salesRate);
-//        }
-//
+        SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        String restoredText = prefs.getString("text", null);
+        if (restoredText != null) {
+            String itemName = prefs.getString("itemName", "No itemName defined");//"No name defined" is the default value.
+            String salesRate = prefs.getString("salesRate", "0");//"0" is the default value.
+            tvItemName.setText(itemName);
+            tvSalesRate.setText("RS "+salesRate);
+            tvTotalAmount.setText("Total: RS" +salesRate);
+        }
+
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -62,17 +55,6 @@ public class CartDisplay extends AppCompatActivity {
         return true;
     }
 
-    //    private void aboutMenuItem(){
-//        new AlertDialog.Builder(this)
-//                .setTitle("About")
-//                .setMessage("Klok Innovations"+" Copyright 2015 ©. All rights reserved")
-//                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                }).show();
-//    }
     private void addMenuItem() {
         Intent intent = new Intent(this, Categories.class);
         startActivity(intent);

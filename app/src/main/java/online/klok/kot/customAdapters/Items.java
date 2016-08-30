@@ -3,6 +3,7 @@ package online.klok.kot.customAdapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -151,13 +154,17 @@ public class Items extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            ViewHolder holder = null;
+            final ViewHolder holder;
 
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView=inflater.inflate(resource, null);
                 holder.tvItemName = (TextView) convertView.findViewById(R.id.tvItemName);
                 holder.tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
+                holder.bLess = (Button) convertView.findViewById(R.id.bLess);
+                holder.bAdd = (Button) convertView.findViewById(R.id.bAdd);
+                holder.etItemQuantity = (EditText) convertView.findViewById(R.id.etItemQuantity);
+                holder.bAddToCart = (Button) convertView.findViewById(R.id.bAddToCart);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder) convertView.getTag();
@@ -165,19 +172,48 @@ public class Items extends AppCompatActivity {
 
             holder.tvItemName.setText(itemModelList.get(position).getItemName());
             holder.tvPrice.setText("Rs " + itemModelList.get(position).getSalesRate());
+
+            holder.bAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int qty = Integer.parseInt(holder.etItemQuantity.getText().toString().trim());
+                    qty++;
+                    holder.etItemQuantity.setText(""+qty);
+                }
+            });
+
+            holder.bLess.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int qty = Integer.parseInt(holder.etItemQuantity.getText().toString().trim());
+                    if(qty != 0){
+                        qty--;
+                        holder.etItemQuantity.setText(""+qty);
+                    }
+                }
+            });
             final String itemName = itemModelList.get(position).getItemName();
             final String salesRate = itemModelList.get(position).getSalesRate();
 
-            Intent intent = new Intent(Items.this, CartDisplay.class);
-            intent.putExtra("itemName", itemName);
-            intent.putExtra("salesRate", salesRate);
 
+            holder.bAddToCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("itemName", itemName );
+                    edit.putString("salesRate", salesRate );
+                    edit.commit();
+                    Toast.makeText(Items.this,"Added item to cart", Toast.LENGTH_LONG).show();
+                }
+            });
             return convertView;
         }
 
         class ViewHolder{
-            private TextView tvItemName;
-            private TextView tvPrice;
+            private TextView tvItemName, tvPrice;
+            private Button bLess, bAdd, bAddToCart;
+            private EditText etItemQuantity;
         }
     }
 
