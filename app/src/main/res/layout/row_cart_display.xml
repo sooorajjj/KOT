@@ -14,7 +14,7 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
 
             <ImageView
                 android:id="@+id/ivIcon"
@@ -59,7 +59,7 @@
                     android:backgroundTint="@color/colorPrimaryDark" />
 
                 <EditText
-                    android:id="@+id/itemQuantityText"
+                    android:id="@+id/etItemQuantity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.06"

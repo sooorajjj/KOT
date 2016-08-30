@@ -186,7 +186,7 @@ public class Items extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     int qty = Integer.parseInt(holder.etItemQuantity.getText().toString().trim());
-                    if(qty != 0){
+                    if(qty != 1){
                         qty--;
                         holder.etItemQuantity.setText(""+qty);
                     }
@@ -194,6 +194,7 @@ public class Items extends AppCompatActivity {
             });
             final String itemName = itemModelList.get(position).getItemName();
             final String salesRate = itemModelList.get(position).getSalesRate();
+            final int itemQuantity = Integer.parseInt(holder.etItemQuantity.getText().toString());
 
 
             holder.bAddToCart.setOnClickListener(new View.OnClickListener() {
@@ -201,8 +202,10 @@ public class Items extends AppCompatActivity {
                 public void onClick(View view) {
                     SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
                     SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("text", "text");
                     edit.putString("itemName", itemName );
                     edit.putString("salesRate", salesRate );
+                    edit.putInt("itemQuantity", itemQuantity );
                     edit.commit();
                     Toast.makeText(Items.this,"Added item to cart", Toast.LENGTH_LONG).show();
                 }
