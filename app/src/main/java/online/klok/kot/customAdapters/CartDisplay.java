@@ -21,15 +21,12 @@ public class CartDisplay extends AppCompatActivity {
 
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
-        String restoredText = prefs.getString("text", null);
-        if (restoredText != null) {
-            String itemName = prefs.getString("itemName", "No itemName defined");//"No name defined" is the default value.
-            String salesRate = prefs.getString("salesRate", "0");//"0" is the default value.
+        String itemName = prefs.getString("itemName", "No itemName defined");//"No name defined" is the default value.
+        String salesRate = prefs.getString("salesRate", "0");//"0" is the default value.
+
             tvItemName.setText(itemName);
             tvSalesRate.setText("RS "+salesRate);
             tvTotalAmount.setText("Total: RS" +salesRate);
-        }
-
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
