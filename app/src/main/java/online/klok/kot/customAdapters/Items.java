@@ -194,7 +194,6 @@ public class Items extends AppCompatActivity {
             });
             final String itemName = itemModelList.get(position).getItemName();
             final String salesRate = itemModelList.get(position).getSalesRate();
-            final int itemQuantity = Integer.parseInt(holder.etItemQuantity.getText().toString());
 
 
             holder.bAddToCart.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +201,7 @@ public class Items extends AppCompatActivity {
                 public void onClick(View view) {
                     SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
                     SharedPreferences.Editor edit = prefs.edit();
+                    int itemQuantity = Integer.parseInt(holder.etItemQuantity.getText().toString());
                     edit.putString("text", "text");
                     edit.putString("itemName", itemName );
                     edit.putString("salesRate", salesRate );
