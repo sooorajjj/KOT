@@ -18,11 +18,13 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".customAdapters.User" />
         <activity android:name=".customAdapters.CardBalance" />
@@ -42,13 +44,27 @@
         <activity android:name=".customAdapters.CartDisplay" />
         <activity android:name=".customAdapters.OrderSelected" />
 
-        <activity android:name=".shopping_cart.ShoppingCartActivity">
+        <!-- <activity android:name=".shopping_cart.ShoppingCartActivity"> -->
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".shopping_cart.CartActivity">
+            <!--android:label="@string/app_name"-->
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar">-->
+
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
     </application>
 

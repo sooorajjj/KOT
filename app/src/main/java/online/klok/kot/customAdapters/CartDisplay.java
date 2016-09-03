@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ public class CartDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.row_cart_display);
+
+        final EditText etItemQuantity;
 
         SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
         String restoredText = prefs.getString("text", null);
@@ -30,13 +33,33 @@ public class CartDisplay extends AppCompatActivity {
             TextView tvItemName = (TextView) findViewById(R.id.tvItemName);
             TextView tvSalesRate = (TextView) findViewById(R.id.tvSalesRate);
             TextView tvTotalAmount = (TextView) findViewById(R.id.tvTotalAmount);
-            EditText etItemQuantity = (EditText) findViewById(R.id.etItemQuantity);
+            etItemQuantity = (EditText) findViewById(R.id.etItemQuantity);
 
 
             tvItemName.setText(itemName);
             tvSalesRate.setText("RS " + salesRate);
             tvTotalAmount.setText("Total: RS" + salesRate);
             etItemQuantity.setText(""+itemQuantity);
+
+            bAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int qty = Integer.parseInt(etItemQuantity.getText().toString().trim());
+                    qty++;
+                    etItemQuantity.setText(""+qty);
+                }
+            });
+
+            bLess.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int qty = Integer.parseInt(etItemQuantity.getText().toString().trim());
+                    if(qty != 1){
+                        qty--;
+                        etItemQuantity.setText(""+qty);
+                    }
+                }
+            });
         }
     }
 

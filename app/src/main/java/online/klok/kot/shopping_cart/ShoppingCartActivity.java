@@ -16,10 +16,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
     private static final String LOG_TAG = ShoppingCartActivity.class.getSimpleName();
 
     private RecyclerView rvShoppingCart;
-    private TextView tvTotalItems;
-    private TextView tvTotalPrice;
-    private int currentCartCount;
-    private int currentTotalPrice;
+    private TextView tvTotalItems, tvTotalPrice;
+    private int currentCartCount, currentTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
