@@ -18,10 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_name_of_item"
-        android:text="Price"
+        android:text="Item"
         android:textColor="@android:color/darker_gray"
         android:textSize="17sp" />
-
 
     <Button
         android:id="@+id/btn_add"
@@ -32,5 +31,24 @@
         android:layout_alignParentRight="true"
         android:text="+"
         android:textSize="22sp" />
+
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_add"-->
+        <!--style="@style/Base.Widget.AppCompat.Button.Borderless"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toStartOf="@+id/btn_Less"-->
+        <!--android:text="+"-->
+        <!--android:textSize="20sp" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_Less"-->
+        <!--style="@style/Base.Widget.AppCompat.Button.Borderless"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:text="-"-->
+        <!--android:textSize="20sp" />-->
 
 </RelativeLayout>

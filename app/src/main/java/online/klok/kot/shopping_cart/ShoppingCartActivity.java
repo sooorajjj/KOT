@@ -50,7 +50,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
         for (int i = 0; i < 20; i++) {
             ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
-            shoppingCartPOJO.setName("Item " + (i + 1));
+            shoppingCartPOJO.setName("" + (i + 1));
             shoppingCartPOJO.setPrice(i + 1);
             itemList.add(shoppingCartPOJO);
         }
@@ -73,4 +73,18 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
 
     }
+//    @Override
+//    public void onShoppingCartLessClicked(double price) {
+//
+//        currentCartCount = currentCartCount - 1;
+//        if(price == 0.0){
+//            currentTotalPrice = currentTotalPrice;
+//
+//        }
+//        currentTotalPrice = currentTotalPrice - price;
+//
+//        tvTotalItems.setText("Total Item : " + currentCartCount);
+//        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+//
+//    }
 }

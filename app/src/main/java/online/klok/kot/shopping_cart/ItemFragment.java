@@ -145,7 +145,9 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
         protected void onPostExecute(List<ItemModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-            getShoppingCartItems();
+//            rvShoppingCart = (RecyclerView) getView().findViewById(R.id.rv_shopping_cart);
+//            rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            rvShoppingCart.setAdapter(new ShoppingCartAdapter(ItemFragment.this, getShoppingCartItems()));
         }
     }
 
@@ -154,7 +156,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         for (int i = 0; i < itemModelList.size(); i++) {
             ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
-            shoppingCartPOJO.setName("Item " + itemModelList.get(i).getItemName());
+            shoppingCartPOJO.setName("" + itemModelList.get(i).getItemName());
             shoppingCartPOJO.setPrice(Double.parseDouble(itemModelList.get(i).getSalesRate()));
             itemList.add(shoppingCartPOJO);
         }
@@ -174,5 +176,17 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
     }
+
+//    @Override
+//    public void onShoppingCartLessClicked(double price) {
+//
+//        currentCartCount = currentCartCount + 1;
+//        currentTotalPrice = currentTotalPrice + price;
+//
+//        tvTotalItems.setText("Total Item : " + currentCartCount);
+//        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+//
+//    }
+
 
 }
