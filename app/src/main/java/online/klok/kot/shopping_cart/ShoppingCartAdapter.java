@@ -73,7 +73,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             tvItemName = (TextView) itemView.findViewById(R.id.tv_name_of_item);
             tvItemPrice = (TextView) itemView.findViewById(R.id.tv_item_price);
             btnAdd = (Button) itemView.findViewById(R.id.btn_add);
-            btnLess = (Button)itemView.findViewById(R.id.btn_Less);
+//            btnLess = (Button)itemView.findViewById(R.id.btn_Less);
 
         }
     }
