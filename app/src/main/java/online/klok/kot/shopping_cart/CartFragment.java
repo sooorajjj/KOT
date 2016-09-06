@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 
 /**
@@ -47,30 +48,48 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     }
 
     private ArrayList<ShoppingCartPOJO> getShoppingCartItems() {
-        ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
+//        ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
+//
+        for (int i = 0; i < AppKOT.cartItemSelected.size(); i++) {
 
-        for (int i = 0; i < 20; i++) {
-            ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
-            shoppingCartPOJO.setName("Item " + (i + 1));
-            shoppingCartPOJO.setPrice(i + 1);
-            itemList.add(shoppingCartPOJO);
+            ShoppingCartPOJO shoppingCartPOJO = AppKOT.cartItemSelected.get(i);
+
+
+            currentCartCount = currentCartCount + shoppingCartPOJO.getQty();
+            currentTotalPrice = currentTotalPrice + (shoppingCartPOJO.getQty() * shoppingCartPOJO.getPrice());
+
         }
 
-        Log.e(LOG_TAG, "Total items size :" + itemList.size());
 
-        return itemList;
+        tvTotalItems.setText("Total Item : " + currentCartCount);
+        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+
+        Log.e(LOG_TAG, "Total items size :" + AppKOT.cartItemSelected.size());
+
+        return AppKOT.cartItemSelected;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            currentCartCount = 0;
+            currentTotalPrice = 0;
+            rvShoppingCart.setAdapter(new ShoppingCartAdapter(this, getShoppingCartItems()));
+        }
     }
 
     @Override
     public void onShoppingCartAddClicked(double price) {
 
 
-        currentCartCount = currentCartCount + 1;
-        currentTotalPrice = currentTotalPrice + price;
-
-
-        tvTotalItems.setText("Total Item : " + currentCartCount);
-        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+//        currentCartCount = currentCartCount + 1;
+//        currentTotalPrice = currentTotalPrice + price;
+//
+//
+//        tvTotalItems.setText("Total Item : " + currentCartCount);
+//        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
 
     }

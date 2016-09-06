@@ -40,6 +40,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                itemList.get(holder.getAdapterPosition())
+                        .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);
+
                 callBack.onShoppingCartAddClicked(itemList.
                         get(holder.getAdapterPosition()).getPrice());
             }
@@ -58,6 +63,18 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    public ArrayList<ShoppingCartPOJO> getSelectedItems() {
+
+        ArrayList<ShoppingCartPOJO> selectedItems = new ArrayList<>();
+
+        for (ShoppingCartPOJO shoppingCartPOJO : itemList) {
+            if (shoppingCartPOJO.getQty() > 0) {
+                selectedItems.add(shoppingCartPOJO);
+            }
+        }
+        return selectedItems;
     }
 
 

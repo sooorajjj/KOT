@@ -9,6 +9,7 @@ public class ShoppingCartPOJO {
 
     String name;
     double price;
+    int qty;
 
     public String getName() {
         return name;
@@ -24,5 +25,13 @@ public class ShoppingCartPOJO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 }

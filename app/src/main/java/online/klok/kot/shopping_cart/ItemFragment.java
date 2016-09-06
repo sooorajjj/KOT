@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 import online.klok.kot.models.ItemModel;
 
@@ -43,6 +44,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
     private double currentTotalPrice;
     private ProgressDialog dialog;
     private List<ItemModel> itemModelList = new ArrayList<>();
+    private ShoppingCartAdapter adapter;
 
 
     @Override
@@ -147,7 +149,9 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
             dialog.dismiss();
 //            rvShoppingCart = (RecyclerView) getView().findViewById(R.id.rv_shopping_cart);
 //            rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            rvShoppingCart.setAdapter(new ShoppingCartAdapter(ItemFragment.this, getShoppingCartItems()));
+
+            adapter=new ShoppingCartAdapter(ItemFragment.this, getShoppingCartItems());
+            rvShoppingCart.setAdapter(adapter);
         }
     }
 
@@ -174,6 +178,8 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+
+        AppKOT.cartItemSelected=adapter.getSelectedItems();
 
     }
 
