@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import online.klok.kot.R;
+import online.klok.kot.models.ItemModel;
 
 /**
  * Created by NJ on 01/09/16.
@@ -19,6 +21,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     private final OnShoppingCartItemClicked callBack;
 
     private ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
+    private List<ItemModel> itemModelList = new ArrayList<>();
 
     public ShoppingCartAdapter(OnShoppingCartItemClicked callBack, ArrayList<ShoppingCartPOJO> itemList) {
         this.itemList = itemList;
@@ -73,6 +76,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     // interface for call back to count and add total
 
     public interface OnShoppingCartItemClicked {
-        void onShoppingCartAddClicked(int price);
+        void onShoppingCartAddClicked(double price);
     }
 }

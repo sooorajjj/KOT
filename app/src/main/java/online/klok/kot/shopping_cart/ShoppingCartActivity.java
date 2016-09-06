@@ -17,7 +17,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
     private RecyclerView rvShoppingCart;
     private TextView tvTotalItems, tvTotalPrice;
-    private int currentCartCount, currentTotalPrice;
+    private int currentCartCount;
+    private double currentTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
     }
 
     @Override
-    public void onShoppingCartAddClicked(int price) {
+    public void onShoppingCartAddClicked(double price) {
 
 
         currentCartCount = currentCartCount + 1;

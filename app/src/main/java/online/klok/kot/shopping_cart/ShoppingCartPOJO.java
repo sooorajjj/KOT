@@ -8,7 +8,7 @@ public class ShoppingCartPOJO {
 
 
     String name;
-    int price;
+    double price;
 
     public String getName() {
         return name;
@@ -18,11 +18,11 @@ public class ShoppingCartPOJO {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
