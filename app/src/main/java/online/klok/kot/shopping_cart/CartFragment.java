@@ -1,6 +1,7 @@
 package online.klok.kot.shopping_cart;
 
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         tvTotalItems = (TextView) view.findViewById(R.id.tv_total_items);
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
 

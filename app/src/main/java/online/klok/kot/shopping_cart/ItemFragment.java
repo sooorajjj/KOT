@@ -1,5 +1,6 @@
 package online.klok.kot.shopping_cart;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item, container, false);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         dialog = new ProgressDialog(getActivity());
         dialog.setIndeterminate(true);
