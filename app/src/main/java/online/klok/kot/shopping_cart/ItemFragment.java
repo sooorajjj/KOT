@@ -35,7 +35,7 @@ import online.klok.kot.models.ItemModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShoppingCartItemClicked {
+public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShoppingCartItemClicked {
 
     private static final String LOG_TAG = ItemFragment.class.getSimpleName();
 
@@ -45,7 +45,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
     private double currentTotalPrice;
     private ProgressDialog dialog;
     private List<ItemModel> itemModelList = new ArrayList<>();
-    private ShoppingCartAdapter adapter;
+    private ShoppingItemAdapter adapter;
 
 
     @Override
@@ -71,7 +71,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         rvShoppingCart = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvShoppingCart.setAdapter(new ShoppingCartAdapter(this, getShoppingCartItems()));
+        rvShoppingCart.setAdapter(new ShoppingItemAdapter(this, getShoppingCartItems()));
 
         return view;
     }
@@ -149,10 +149,7 @@ public class ItemFragment extends Fragment implements ShoppingCartAdapter.OnShop
         protected void onPostExecute(List<ItemModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
-//            rvShoppingCart = (RecyclerView) getView().findViewById(R.id.rv_shopping_cart);
-//            rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-            adapter=new ShoppingCartAdapter(ItemFragment.this, getShoppingCartItems());
+            adapter=new ShoppingItemAdapter(ItemFragment.this, getShoppingCartItems());
             rvShoppingCart.setAdapter(adapter);
         }
     }

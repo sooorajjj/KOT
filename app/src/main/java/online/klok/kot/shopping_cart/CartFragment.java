@@ -96,5 +96,9 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
 
     }
+    @Override
+    public void onShoppingCartLessClicked(double price) {
+
+    }
 
 }

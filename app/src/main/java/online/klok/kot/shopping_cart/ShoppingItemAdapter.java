@@ -11,28 +11,26 @@ import java.util.ArrayList;
 
 import online.klok.kot.R;
 
-/**
- * Created by NJ on 01/09/16.
- */
-public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ShoppingCartViewHolder> {
-    public static final String LOG_TAG = "ShoppingCartAdapter";
+public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapter.ShoppingItemViewHolder> {
+
+    public static final String LOG_TAG = "ShoppingItemAdapter";
     private final OnShoppingCartItemClicked callBack;
 
     private ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
 
-    public ShoppingCartAdapter(OnShoppingCartItemClicked callBack, ArrayList<ShoppingCartPOJO> itemList) {
+    public ShoppingItemAdapter(OnShoppingCartItemClicked callBack, ArrayList<ShoppingCartPOJO> itemList) {
         this.itemList = itemList;
         this.callBack = callBack;
     }
 
     @Override
-    public ShoppingCartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_cart, parent, false);
-        return new ShoppingCartViewHolder(itemView);
+    public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shopping_cart, parent, false);
+        return new ShoppingItemViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final ShoppingCartViewHolder holder, int position) {
+    public void onBindViewHolder(final ShoppingItemViewHolder holder, int position) {
 
         holder.tvItemName.setText(itemList.get(position).getName());
         holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
@@ -46,14 +44,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                         .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);
 
                 callBack.onShoppingCartAddClicked(itemList.
-                        get(holder.getAdapterPosition()).getPrice());
-            }
-        });
-
-        holder.btnLess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.onShoppingCartLessClicked(itemList.
                         get(holder.getAdapterPosition()).getPrice());
             }
         });
@@ -77,29 +67,26 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         return selectedItems;
     }
 
-
-    public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
+    public class ShoppingItemViewHolder extends RecyclerView.ViewHolder {
 
 
         TextView tvItemName;
         TextView tvItemPrice;
-        Button btnAdd, btnLess;
+        Button btnAdd;
 
-        public ShoppingCartViewHolder(View itemView) {
+        public ShoppingItemViewHolder(View itemView) {
             super(itemView);
             tvItemName = (TextView) itemView.findViewById(R.id.tv_name_of_item);
             tvItemPrice = (TextView) itemView.findViewById(R.id.tv_item_price);
             btnAdd = (Button) itemView.findViewById(R.id.btn_add);
-            btnLess = (Button)itemView.findViewById(R.id.btn_Less);
 
         }
     }
 
-
     // interface for call back to count and add total
-
     public interface OnShoppingCartItemClicked {
         void onShoppingCartAddClicked(double price);
-        void onShoppingCartLessClicked(double price);
+//        void onShoppingCartLessClicked(double price);
     }
+
 }
