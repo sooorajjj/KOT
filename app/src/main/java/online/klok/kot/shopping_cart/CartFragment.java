@@ -96,6 +96,16 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     @Override
     public void onShoppingCartLessClicked(double price) {
 
+
+        if(currentCartCount != 0){
+
+            currentCartCount = currentCartCount - 1;
+            currentTotalPrice = currentTotalPrice - price;
+
+            tvTotalItems.setText("Total Item : " + currentCartCount);
+            tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+        }
+
     }
 
 }
