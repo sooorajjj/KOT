@@ -86,7 +86,6 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
     // interface for call back to count and add total
     public interface OnShoppingCartItemClicked {
         void onShoppingCartAddClicked(double price);
-//        void onShoppingCartLessClicked(double price);
     }
 
 }
