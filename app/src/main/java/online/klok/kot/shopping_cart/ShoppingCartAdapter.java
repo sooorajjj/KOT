@@ -78,11 +78,19 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     }
 
 
+    public interface OnShoppingCartItemClicked {
+        void onShoppingCartAddClicked(double price);
+
+        void onShoppingCartLessClicked(double price);
+    }
+
+
+    // interface for call back to count and add total
+
     public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView tvItemName;
-        TextView tvItemPrice;
+        TextView tvItemName, tvItemPrice, tvtvItemQty;
         Button btnAdd, btnLess;
 
         public ShoppingCartViewHolder(View itemView) {
@@ -90,16 +98,10 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             tvItemName = (TextView) itemView.findViewById(R.id.tv_name_of_item);
             tvItemPrice = (TextView) itemView.findViewById(R.id.tv_item_price);
             btnAdd = (Button) itemView.findViewById(R.id.btn_add);
-            btnLess = (Button)itemView.findViewById(R.id.btn_Less);
+            // TODO set qty details to this TextView
+            tvtvItemQty = (TextView) itemView.findViewById(R.id.tv_item_qty);
+            btnLess = (Button) itemView.findViewById(R.id.btn_Less);
 
         }
-    }
-
-
-    // interface for call back to count and add total
-
-    public interface OnShoppingCartItemClicked {
-        void onShoppingCartAddClicked(double price);
-        void onShoppingCartLessClicked(double price);
     }
 }

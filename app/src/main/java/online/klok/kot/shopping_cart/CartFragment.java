@@ -104,6 +104,11 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
             tvTotalItems.setText("Total Item : " + currentCartCount);
             tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+        } else {
+
+            // TODO set adapter for RecycleView to empty ArrayList ?
+            ArrayList<ShoppingCartPOJO> cartItemSelected = new ArrayList<>();
+
         }
 
     }
