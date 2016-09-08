@@ -32,35 +32,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ShoppingCartViewHolder holder, int position) {
-
-        holder.tvItemName.setText(itemList.get(position).getName());
-        holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
-
-        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                itemList.get(holder.getAdapterPosition())
-                        .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);
-
-                callBack.onShoppingCartAddClicked(itemList.
-                        get(holder.getAdapterPosition()).getPrice());
-            }
-        });
-
-        holder.btnLess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.onShoppingCartLessClicked(itemList.
-                        get(holder.getAdapterPosition()).getPrice());
-            }
-        });
-
-    }
-
-    @Override
     public int getItemCount() {
         return itemList.size();
     }
@@ -77,20 +48,54 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         return selectedItems;
     }
 
+    @Override
+    public void onBindViewHolder(final ShoppingCartViewHolder holder, int position) {
 
-    public interface OnShoppingCartItemClicked {
-        void onShoppingCartAddClicked(double price);
+        holder.tvItemName.setText(itemList.get(position).getName());
+        holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
 
-        void onShoppingCartLessClicked(double price);
+        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                itemList.get(holder.getAdapterPosition())
+                        .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);
+
+                callBack.onShoppingCartAddClicked(itemList.
+                        get(holder.getAdapterPosition()).getPrice());
+
+                int qty = Integer.parseInt(holder.tvItemQty.getText().toString().trim());
+                    qty++;
+                    holder.tvItemQty.setText("" + qty);
+            }
+        });
+
+        holder.tvItemQty.setText("" + itemList.get(position).getQty());
+
+        holder.btnLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.onShoppingCartLessClicked(itemList.
+                        get(holder.getAdapterPosition()).getPrice());
+
+                int qty = Integer.parseInt(holder.tvItemQty.getText().toString().trim());
+                if(qty != 0) {
+                    qty--;
+                    holder.tvItemQty.setText("" + qty);
+                }
+
+            }
+        });
+
     }
 
 
-    // interface for call back to count and add total
 
     public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView tvItemName, tvItemPrice, tvtvItemQty;
+        TextView tvItemName, tvItemPrice, tvItemQty;
         Button btnAdd, btnLess;
 
         public ShoppingCartViewHolder(View itemView) {
@@ -99,9 +104,16 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             tvItemPrice = (TextView) itemView.findViewById(R.id.tv_item_price);
             btnAdd = (Button) itemView.findViewById(R.id.btn_add);
             // TODO set qty details to this TextView
-            tvtvItemQty = (TextView) itemView.findViewById(R.id.tv_item_qty);
+            tvItemQty = (TextView) itemView.findViewById(R.id.tv_item_qty);
             btnLess = (Button) itemView.findViewById(R.id.btn_Less);
 
         }
+    }
+
+    // interface for call back to count and add total
+
+    public interface OnShoppingCartItemClicked {
+        void onShoppingCartAddClicked(double price);
+        void onShoppingCartLessClicked(double price);
     }
 }

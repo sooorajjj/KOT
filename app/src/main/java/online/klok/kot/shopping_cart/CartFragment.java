@@ -47,7 +47,8 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         rvShoppingCart = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvShoppingCart.setAdapter(new ShoppingCartAdapter(this, getShoppingCartItems()));
+        adapter=new ShoppingCartAdapter(this, getShoppingCartItems());
+        rvShoppingCart.setAdapter(adapter);
 
         return view;
     }
@@ -94,18 +95,20 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
+
     }
     @Override
     public void onShoppingCartLessClicked(double price) {
 
 
-        if(currentCartCount != 0){
+        if(currentCartCount > 0){
 
             currentCartCount = currentCartCount - 1;
             currentTotalPrice = currentTotalPrice - price;
 
             tvTotalItems.setText("Total Item : " + currentCartCount);
             tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+
         } else {
 
             // TODO RecycleView : set adapter to empty ArrayList ?

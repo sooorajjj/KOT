@@ -148,7 +148,10 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         @Override
         protected void onPostExecute(List<ItemModel> result) {
             super.onPostExecute(result);
-            dialog.dismiss();
+            if(dialog != null && dialog.isShowing())
+            {
+                dialog.dismiss();
+            }
             adapter=new ShoppingItemAdapter(ItemFragment.this, getShoppingCartItems());
             rvShoppingCart.setAdapter(adapter);
         }
