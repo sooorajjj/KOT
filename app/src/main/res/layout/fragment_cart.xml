@@ -2,12 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#999595"
     android:orientation="vertical"
+    android:weightSum="1"
     tools:context="online.klok.kot.shopping_cart.CartFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -33,6 +36,22 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_shopping_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="#ffffff" />
+
+    <EditText
+        android:id="@+id/etKitchenNote"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.46"
+        android:hint="Kitchen Note" />
+
+    <Button
+        android:id="@+id/btnSendToKitchen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Send To Kitchen" />
 
 </LinearLayout>

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,8 +30,9 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     private TextView tvTotalItems, tvTotalPrice;
     private int currentCartCount;
     private double currentTotalPrice;
+    private EditText etKitchenNote;
+    private Button btnSendToKitchen;
     private ShoppingCartAdapter adapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +52,10 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         adapter=new ShoppingCartAdapter(this, getShoppingCartItems());
         rvShoppingCart.setAdapter(adapter);
+
+        etKitchenNote = (EditText) view.findViewById(R.id.etKitchenNote);
+        btnSendToKitchen = (Button) view.findViewById(R.id.btnSendToKitchen);
+
 
         return view;
     }
@@ -95,8 +102,8 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
-
     }
+
     @Override
     public void onShoppingCartLessClicked(double price) {
 
