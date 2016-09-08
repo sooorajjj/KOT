@@ -28,6 +28,8 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     private TextView tvTotalItems, tvTotalPrice;
     private int currentCartCount;
     private double currentTotalPrice;
+    private ShoppingCartAdapter adapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,8 +108,11 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
             tvTotalPrice.setText("Total Price : " + currentTotalPrice);
         } else {
 
-            // TODO set adapter for RecycleView to empty ArrayList ?
+            // TODO RecycleView : set adapter to empty ArrayList ?
             ArrayList<ShoppingCartPOJO> cartItemSelected = new ArrayList<>();
+
+            adapter=new ShoppingCartAdapter(CartFragment.this, cartItemSelected);
+            rvShoppingCart.setAdapter(adapter);
 
         }
 
