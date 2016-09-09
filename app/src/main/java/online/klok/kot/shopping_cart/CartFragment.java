@@ -82,6 +82,17 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
             }
         });
 
+        btnSendToKitchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
+                shoppingCartPOJO.setType(btnType.getText().toString());
+                shoppingCartPOJO.setKitchenNote(etKitchenNote.getText().toString());
+
+            }
+        });
+
         return view;
     }
 
