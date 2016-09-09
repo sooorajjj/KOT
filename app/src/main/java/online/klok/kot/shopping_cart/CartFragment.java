@@ -27,11 +27,11 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     private static final String LOG_TAG = CartFragment.class.getSimpleName();
 
     private RecyclerView rvShoppingCart;
-    private TextView tvTotalItems, tvTotalPrice;
+    private TextView tvTotalItems, tvTotalPrice, tvTotalCartAmt;
     private int currentCartCount;
     private double currentTotalPrice;
     private EditText etKitchenNote;
-    private Button btnSendToKitchen;
+    private Button btnSendToKitchen, btnType;
     private ShoppingCartAdapter adapter;
 
     @Override
@@ -43,10 +43,11 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         tvTotalItems = (TextView) view.findViewById(R.id.tv_total_items);
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
-
+        tvTotalCartAmt = (TextView) view.findViewById(R.id.tv_total_cart_amt);
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
 
         rvShoppingCart = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -55,7 +56,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         etKitchenNote = (EditText) view.findViewById(R.id.etKitchenNote);
         btnSendToKitchen = (Button) view.findViewById(R.id.btnSendToKitchen);
-
+        btnType = (Button) view.findViewById(R.id.btn_type);
 
         return view;
     }
@@ -76,6 +77,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
 
         Log.e(LOG_TAG, "Total items size :" + AppKOT.cartItemSelected.size());
 
@@ -106,6 +108,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
     }
 
 }
