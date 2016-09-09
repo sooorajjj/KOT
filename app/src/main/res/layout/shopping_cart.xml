@@ -38,6 +38,7 @@
         android:layout_alignParentBottom="@+id/btn_add"
         android:layout_toStartOf="@+id/btn_Less"
         android:text="Qty"
+        android:layout_centerVertical="true"
         android:textSize="20sp" />
 
     <Button

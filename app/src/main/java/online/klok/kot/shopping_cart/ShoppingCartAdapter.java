@@ -25,6 +25,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         this.callBack = callBack;
     }
 
+    public ArrayList<ShoppingCartPOJO> getAllItemsAdded() {
+
+        return itemList;
+    }
+
     @Override
     public ShoppingCartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_cart, parent, false);
@@ -53,43 +58,40 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         holder.tvItemName.setText(itemList.get(position).getName());
         holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
+        holder.tvItemQty.setText("" + itemList.get(position).getQty());
 
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 itemList.get(holder.getAdapterPosition())
                         .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);
+                notifyDataSetChanged();
+                callBack.onShoppingItemQtyChanged();
 
-                callBack.onShoppingCartAddClicked(itemList.
-                        get(holder.getAdapterPosition()).getPrice());
 
-                int qty = Integer.parseInt(holder.tvItemQty.getText().toString().trim());
-                    qty++;
-                    holder.tvItemQty.setText("" + qty);
             }
         });
 
-        holder.tvItemQty.setText("" + itemList.get(position).getQty());
 
         holder.btnLess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.onShoppingCartLessClicked(itemList.
-                        get(holder.getAdapterPosition()).getPrice());
 
-                int qty = Integer.parseInt(holder.tvItemQty.getText().toString().trim());
-                if(qty != 0) {
-                    qty--;
-                    holder.tvItemQty.setText("" + qty);
+                itemList.get(holder.getAdapterPosition())
+                        .setQty(itemList.get(holder.getAdapterPosition()).getQty() - 1);
+
+
+                if (itemList.get(holder.getAdapterPosition()).getQty() == 0) {
+                    itemList.remove(holder.getAdapterPosition());
                 }
+                notifyDataSetChanged();
+                callBack.onShoppingItemQtyChanged();
 
             }
         });
 
     }
-
 
 
     public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
@@ -113,7 +115,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     // interface for call back to count and add total
 
     public interface OnShoppingCartItemClicked {
-        void onShoppingCartAddClicked(double price);
-        void onShoppingCartLessClicked(double price);
+        void onShoppingItemQtyChanged();
     }
 }

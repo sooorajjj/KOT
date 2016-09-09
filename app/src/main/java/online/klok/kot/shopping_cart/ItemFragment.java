@@ -1,4 +1,5 @@
 package online.klok.kot.shopping_cart;
+
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -77,8 +78,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
     }
 
 
-
-    public class JSONTask extends AsyncTask<String, String, List<ItemModel> > {
+    public class JSONTask extends AsyncTask<String, String, List<ItemModel>> {
 
         @Override
         protected void onPreExecute() {
@@ -148,11 +148,10 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         @Override
         protected void onPostExecute(List<ItemModel> result) {
             super.onPostExecute(result);
-            if(dialog != null && dialog.isShowing())
-            {
+            if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            adapter=new ShoppingItemAdapter(ItemFragment.this, getShoppingCartItems());
+            adapter = new ShoppingItemAdapter(ItemFragment.this, getShoppingCartItems());
             rvShoppingCart.setAdapter(adapter);
         }
     }
@@ -181,7 +180,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
-        AppKOT.cartItemSelected=adapter.getSelectedItems();
+        AppKOT.cartItemSelected = adapter.getSelectedItems();
 
     }
 

@@ -50,7 +50,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         rvShoppingCart = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        adapter=new ShoppingCartAdapter(this, getShoppingCartItems());
+        adapter = new ShoppingCartAdapter(this, getShoppingCartItems());
         rvShoppingCart.setAdapter(adapter);
 
         etKitchenNote = (EditText) view.findViewById(R.id.etKitchenNote);
@@ -89,43 +89,23 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
         if (isVisibleToUser) {
             currentCartCount = 0;
             currentTotalPrice = 0;
-            rvShoppingCart.setAdapter(new ShoppingCartAdapter(this, getShoppingCartItems()));
+            adapter = new ShoppingCartAdapter(this, getShoppingCartItems());
+            rvShoppingCart.setAdapter(adapter);
         }
     }
 
     @Override
-    public void onShoppingCartAddClicked(double price) {
-
-        currentCartCount = currentCartCount + 1;
-        currentTotalPrice = currentTotalPrice + price;
+    public void onShoppingItemQtyChanged() {
+        ArrayList<ShoppingCartPOJO> itemInCart = adapter.getAllItemsAdded();
+        currentCartCount = 0;
+        currentTotalPrice = 0;
+        for (ShoppingCartPOJO shoppingCartPOJO : itemInCart) {
+            currentCartCount = currentCartCount + shoppingCartPOJO.getQty();
+            currentTotalPrice = currentTotalPrice + (shoppingCartPOJO.getQty() * shoppingCartPOJO.getPrice());
+        }
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
-
-    }
-
-    @Override
-    public void onShoppingCartLessClicked(double price) {
-
-
-        if(currentCartCount > 0){
-
-            currentCartCount = currentCartCount - 1;
-            currentTotalPrice = currentTotalPrice - price;
-
-            tvTotalItems.setText("Total Item : " + currentCartCount);
-            tvTotalPrice.setText("Total Price : " + currentTotalPrice);
-
-        } else {
-
-            // TODO RecycleView : set adapter to empty ArrayList ?
-            ArrayList<ShoppingCartPOJO> cartItemSelected = new ArrayList<>();
-
-            adapter=new ShoppingCartAdapter(CartFragment.this, cartItemSelected);
-            rvShoppingCart.setAdapter(adapter);
-
-        }
-
     }
 
 }
