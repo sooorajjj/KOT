@@ -2,6 +2,7 @@ package online.klok.kot.shopping_cart;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import online.klok.kot.AppKOT;
 import online.klok.kot.R;
+import online.klok.kot.orders.OrdersActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,6 +91,9 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
                 ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
                 shoppingCartPOJO.setType(btnType.getText().toString());
                 shoppingCartPOJO.setKitchenNote(etKitchenNote.getText().toString());
+
+                Intent intent = new Intent(getActivity(), OrdersActivity.class);
+                startActivity(intent);
 
             }
         });
