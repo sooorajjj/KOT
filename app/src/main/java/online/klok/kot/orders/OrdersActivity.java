@@ -1,25 +1,29 @@
 package online.klok.kot.orders;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import online.klok.kot.R;
-import online.klok.kot.shopping_cart.CartActivity;
 
 
 public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.OnOrdersItemClicked {
 
     private static final String LOG_TAG = OrdersActivity.class.getSimpleName();
 
-    private RecyclerView rvOrders;
+    RecyclerView rvOrders;
+    Toolbar toolbar;
+    TextView tvToolbarTitle;
+    Button btnAddOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,21 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
     private void initViews() {
 
-//        assert getSupportActionBar() != null;
-//        getSupportActionBar().setTitle("My Orders");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        tvToolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
+        btnAddOrder = (Button) toolbar.findViewById(R.id.btn_add_order);
+
+        toolbar.setTitle("");
+
+        btnAddOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addMenuItem();
+            }
+        });
+        setSupportActionBar(toolbar);
+
 
         rvOrders = (RecyclerView) findViewById(R.id.rv_orders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -52,29 +69,11 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
         return itemList;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.testmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case R.id.action_add_item:
-                addMenuItem();
-                break;
-        }
-        return true;
-    }
-
     private void addMenuItem() {
-        Intent intent = new Intent(this, CartActivity.class);
-        startActivity(intent);
-        finish();
+        Toast.makeText(OrdersActivity.this, "add_item selected", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(this, CartActivity.class);
+//        startActivity(intent);
+//        finish();
     }
-
 
 }
