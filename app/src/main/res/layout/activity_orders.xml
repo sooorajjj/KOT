@@ -7,7 +7,6 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp"
-    android:weightSum="1"
     tools:context=".orders.OrdersActivity">
 
     <android.support.v7.widget.RecyclerView
