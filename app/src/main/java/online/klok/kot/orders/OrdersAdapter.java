@@ -43,14 +43,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
             @Override
             public void onClick(View view) {
 
+                callBack.onOrdersEditItemClicked();
             }
         });
 
         holder.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                callBack.OnOrdersItemClicked(itemList.
-//                        get(holder.getAdapterPosition()).getPrice());
+                callBack.onOrdersCheckoutItemClicked();
             }
         });
 
@@ -63,6 +63,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
 
     public interface OnOrdersItemClicked {
+        void onOrdersEditItemClicked();
+
+        void onOrdersCheckoutItemClicked();
 
     }
 

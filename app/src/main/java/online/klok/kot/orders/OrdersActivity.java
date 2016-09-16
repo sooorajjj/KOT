@@ -1,5 +1,6 @@
 package online.klok.kot.orders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import online.klok.kot.R;
+import online.klok.kot.shopping_cart.CartActivity;
 
 
 public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.OnOrdersItemClicked {
@@ -44,7 +46,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
         btnAddOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addMenuItem();
+                newOrder();
             }
         });
         setSupportActionBar(toolbar);
@@ -69,11 +71,24 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
         return itemList;
     }
-    private void addMenuItem() {
-        Toast.makeText(OrdersActivity.this, "add_item selected", Toast.LENGTH_SHORT).show();
+
+    private void newOrder() {
+        Toast.makeText(OrdersActivity.this, "Perform  newOrder", Toast.LENGTH_SHORT).show();
 //        Intent intent = new Intent(this, CartActivity.class);
 //        startActivity(intent);
 //        finish();
+    }
+
+    @Override
+    public void onOrdersEditItemClicked() {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onOrdersCheckoutItemClicked() {
+        Toast.makeText(OrdersActivity.this, "CheckoutItemClicked", Toast.LENGTH_SHORT).show();
     }
 
 }
