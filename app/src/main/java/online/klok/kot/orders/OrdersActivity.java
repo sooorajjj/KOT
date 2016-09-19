@@ -41,16 +41,12 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
         tvToolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         btnAddOrder = (Button) toolbar.findViewById(R.id.btn_add_order);
 
-        toolbar.setTitle("");
-
         btnAddOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 newOrder();
             }
         });
-        setSupportActionBar(toolbar);
-
 
         rvOrders = (RecyclerView) findViewById(R.id.rv_orders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -89,6 +85,9 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
     @Override
     public void onOrdersCheckoutItemClicked() {
         Toast.makeText(this, "CheckoutItemClicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, OrderCheckoutActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
