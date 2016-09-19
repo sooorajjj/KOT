@@ -73,7 +73,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
     }
 
     private void newOrder() {
-        Toast.makeText(OrdersActivity.this, "Perform  newOrder", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Perform  newOrder", Toast.LENGTH_SHORT).show();
 //        Intent intent = new Intent(this, CartActivity.class);
 //        startActivity(intent);
 //        finish();
@@ -88,7 +88,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
     @Override
     public void onOrdersCheckoutItemClicked() {
-        Toast.makeText(OrdersActivity.this, "CheckoutItemClicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "CheckoutItemClicked", Toast.LENGTH_SHORT).show();
     }
 
 }

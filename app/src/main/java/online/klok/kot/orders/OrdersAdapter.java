@@ -64,7 +64,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
     public interface OnOrdersItemClicked {
         void onOrdersEditItemClicked();
-
         void onOrdersCheckoutItemClicked();
 
     }

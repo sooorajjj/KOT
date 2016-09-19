@@ -45,14 +45,23 @@
         <activity android:name=".customAdapters.CartDisplay" />
         <activity android:name=".customAdapters.OrderSelected" />
         <activity android:name=".shopping_cart.CartActivity">
-            <!--android:screenOrientation="portrait">-->
+
+            <!-- android:screenOrientation="portrait"> -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".orders.OrdersActivity">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".orders.OrdersActivity">
+        <activity android:name=".orders.OrderCheckoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
