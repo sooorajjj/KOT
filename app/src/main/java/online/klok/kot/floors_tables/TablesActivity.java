@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -27,17 +29,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import online.klok.kot.R;
-import online.klok.kot.models.FloorModel;
+import online.klok.kot.models.TableModel;
+import online.klok.kot.shopping_cart.CartActivity;
 
-public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.OnFloorItemClicked {
+public class TablesActivity extends AppCompatActivity implements TablesAdapter.OnTableItemClicked {
 
     private static final String LOG_TAG = FloorsActivity.class.getSimpleName();
 
-    private RecyclerView rvFloors;
     private ProgressDialog dialog;
-    private List<FloorModel> floorModelList = new ArrayList<>();
-    private FloorsAdapter adapter;
-
+    private Toolbar toolbar;
+    private TextView tvToolbarTitle;
+    private RecyclerView rvTables;
+    private List<TableModel> tableModelList = new ArrayList<>();
+    private TablesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +49,39 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
         setContentView(R.layout.activity_floors_tables);
         initViews();
 
-        new JSONTask().execute("http://146.185.178.83/resttest/floor");
+        Intent intent = getIntent();
+        int floorId = intent.getIntExtra("parameter_name", 1);
+        String url = "http://146.185.178.83/resttest/floor/" + floorId + "/tables/";
+        new JSONTask().execute(url);
     }
 
     private void initViews() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+
+        tvToolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
+        tvToolbarTitle.setText("Select Tables");
 
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        rvFloors = (RecyclerView) findViewById(R.id.rv_floors_tables);
-        rvFloors.setLayoutManager(new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false));
-        rvFloors.setAdapter(new FloorsAdapter(this, getFloorsItems()));
+        rvTables = (RecyclerView) findViewById(R.id.rv_floors_tables);
+        rvTables.setLayoutManager(new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false));
+        rvTables.setAdapter(new TablesAdapter(this, getTablesItems()));
 
     }
 
-    private ArrayList<FloorPOJO> getFloorsItems() {
-        ArrayList<FloorPOJO> itemList = new ArrayList<>();
+    private ArrayList<TablePOJO> getTablesItems() {
+        ArrayList<TablePOJO> itemList = new ArrayList<>();
 
-        for (int i = 0; i < floorModelList.size(); i++) {
-            FloorPOJO floorPOJO = new FloorPOJO();
-            floorPOJO.setName("" + floorModelList.get(i).getFloorName());
-            floorPOJO.setId(floorModelList.get(i).getId());
-            itemList.add(floorPOJO);
+        for (int i = 0; i < tableModelList.size(); i++) {
+            TablePOJO tablePOJO = new TablePOJO();
+            tablePOJO.setName("" + tableModelList.get(i).getName());
+            tablePOJO.setId(tableModelList.get(i).getId());
+            itemList.add(tablePOJO);
         }
 
         Log.e(LOG_TAG, "Total items size :" + itemList.size());
@@ -77,17 +90,17 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
     }
 
     @Override
-    public void onFloorItemClicked(int id) {
+    public void onTableItemClicked(String name) {
 
-        Intent intent = new Intent(this, TablesActivity.class);
-        intent.putExtra("parameter_name", id);
+        Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
 
-        Toast.makeText(this, "Floor id : " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Table Name : " + String.valueOf(name), Toast.LENGTH_SHORT).show();
 
     }
 
-    public class JSONTask extends AsyncTask<String, String, List<FloorModel>> {
+
+    public class JSONTask extends AsyncTask<String, String, List<TableModel>> {
 
         @Override
         protected void onPreExecute() {
@@ -96,7 +109,7 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
         }
 
         @Override
-        protected List<FloorModel> doInBackground(String... params) {
+        protected List<TableModel> doInBackground(String... params) {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 
@@ -122,10 +135,10 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
                 Gson gson = new Gson();
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
-                    FloorModel floorModel = gson.fromJson(finalObject.toString(), FloorModel.class);
-                    floorModelList.add(floorModel);
+                    TableModel tableModel = gson.fromJson(finalObject.toString(), TableModel.class);
+                    tableModelList.add(tableModel);
                 }
-                return floorModelList;
+                return tableModelList;
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -149,13 +162,13 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
         }
 
         @Override
-        protected void onPostExecute(List<FloorModel> result) {
+        protected void onPostExecute(List<TableModel> result) {
             super.onPostExecute(result);
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            adapter = new FloorsAdapter(FloorsActivity.this, getFloorsItems());
-            rvFloors.setAdapter(adapter);
+            adapter = new TablesAdapter(TablesActivity.this, getTablesItems());
+            rvTables.setAdapter(adapter);
         }
     }
 }

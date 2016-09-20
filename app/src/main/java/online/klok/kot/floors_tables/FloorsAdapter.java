@@ -19,9 +19,9 @@ public class FloorsAdapter extends RecyclerView.Adapter<FloorsAdapter.FloorItemV
     public static final String LOG_TAG = "ShoppingItemAdapter";
     private final OnFloorItemClicked callBack;
 
-    private ArrayList<FloorAndTablePOJO> itemList = new ArrayList<>();
+    private ArrayList<FloorPOJO> itemList = new ArrayList<>();
 
-    public FloorsAdapter(OnFloorItemClicked callBack, ArrayList<FloorAndTablePOJO> itemList) {
+    public FloorsAdapter(OnFloorItemClicked callBack, ArrayList<FloorPOJO> itemList) {
         this.itemList = itemList;
         this.callBack = callBack;
     }

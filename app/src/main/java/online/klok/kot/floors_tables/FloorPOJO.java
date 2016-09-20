@@ -3,7 +3,7 @@ package online.klok.kot.floors_tables;
 /**
  * Created by klok on 20/9/16.
  */
-public class FloorAndTablePOJO {
+public class FloorPOJO {
 
     String name;
     int id;
