@@ -28,14 +28,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import online.klok.kot.NewOrderActivity;
 import online.klok.kot.R;
 import online.klok.kot.models.TableModel;
-import online.klok.kot.shopping_cart.CartActivity;
 
 public class TablesActivity extends AppCompatActivity implements TablesAdapter.OnTableItemClicked {
 
     private static final String LOG_TAG = FloorsActivity.class.getSimpleName();
-
+    int floorId;
     private ProgressDialog dialog;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
@@ -50,7 +50,8 @@ public class TablesActivity extends AppCompatActivity implements TablesAdapter.O
         initViews();
 
         Intent intent = getIntent();
-        int floorId = intent.getIntExtra("parameter_name", 1);
+        floorId = intent.getIntExtra("FloorId", 1);
+
         String url = "http://146.185.178.83/resttest/floor/" + floorId + "/tables/";
         new JSONTask().execute(url);
     }
@@ -92,7 +93,12 @@ public class TablesActivity extends AppCompatActivity implements TablesAdapter.O
     @Override
     public void onTableItemClicked(String name) {
 
-        Intent intent = new Intent(this, CartActivity.class);
+        String floorName = "F" + floorId;
+
+        Intent intent = new Intent(this, NewOrderActivity.class);
+        intent.putExtra("FloorId", floorId);
+        intent.putExtra("TableName", name);
+        intent.putExtra("FloorName", floorName);
         startActivity(intent);
 
         Toast.makeText(this, "Table Name : " + String.valueOf(name), Toast.LENGTH_SHORT).show();

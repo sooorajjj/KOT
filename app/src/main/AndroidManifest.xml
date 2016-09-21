@@ -82,7 +82,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".floors_tables.TablesActivity"></activity>
+        <activity android:name=".floors_tables.TablesActivity" />
+        <activity android:name=".NewOrderActivity"></activity>
     </application>
 
 </manifest>

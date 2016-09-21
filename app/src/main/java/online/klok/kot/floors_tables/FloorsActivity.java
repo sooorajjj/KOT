@@ -79,8 +79,9 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
     @Override
     public void onFloorItemClicked(int id) {
 
+
         Intent intent = new Intent(this, TablesActivity.class);
-        intent.putExtra("parameter_name", id);
+        intent.putExtra("FloorId", id);
         startActivity(intent);
 
         Toast.makeText(this, "Floor id : " + String.valueOf(id), Toast.LENGTH_SHORT).show();
