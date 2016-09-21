@@ -23,12 +23,12 @@ public class NewOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
-        initViews();
 
         Intent intent = getIntent();
         floorName = intent.getStringExtra("FloorName");
         tableName = intent.getStringExtra("TableName");
         floorId = intent.getIntExtra("FloorId", 1);
+		initViews();
     }
 
     public void initViews() {
