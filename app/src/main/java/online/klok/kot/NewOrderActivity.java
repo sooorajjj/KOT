@@ -28,7 +28,6 @@ public class NewOrderActivity extends AppCompatActivity {
         floorName = intent.getStringExtra("FloorName");
         tableName = intent.getStringExtra("TableName");
         floorId = intent.getIntExtra("FloorId", 1);
-		
 		initViews();
     }
 
