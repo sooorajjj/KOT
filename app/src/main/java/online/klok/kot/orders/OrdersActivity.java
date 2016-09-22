@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import online.klok.kot.R;
+import online.klok.kot.floors_tables.FloorsActivity;
 import online.klok.kot.shopping_cart.CartActivity;
 
 
@@ -70,9 +71,9 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
     private void newOrder() {
         Toast.makeText(this, "Perform  newOrder", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(this, CartActivity.class);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, FloorsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
