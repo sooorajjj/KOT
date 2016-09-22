@@ -1,14 +1,19 @@
 package online.klok.kot;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import online.klok.kot.floors_tables.FloorsActivity;
 import online.klok.kot.floors_tables.TablesActivity;
+import online.klok.kot.orders.OrdersPOJO;
+import online.klok.kot.shopping_cart.CartActivity;
 
 public class NewOrderActivity extends AppCompatActivity {
 
@@ -63,6 +68,45 @@ public class NewOrderActivity extends AppCompatActivity {
                 intent.putExtra("FloorId", floorId);
                 startActivity(intent);
 
+            }
+        });
+
+        btnWaiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String[] type = {"Jishma", "Abhishek", "Ashwathy"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(NewOrderActivity.this);
+                builder.setTitle("Waiters")
+                        .setItems(type, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position of the selected item
+                                btnWaiter.setText(type[which]);
+                            }
+                        });
+                builder.create()
+                        .show();
+            }
+        });
+
+        btnStartKot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                OrdersPOJO ordersPOJO = new OrdersPOJO();
+                ordersPOJO.setCovers(Integer.parseInt(etCovers.getText().toString()));
+                ordersPOJO.setFloorName(btnFloor.getText().toString());
+                ordersPOJO.setTableName(btnTable.getText().toString());
+
+                Intent intent = new Intent(NewOrderActivity.this, CartActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        btnSeatGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(NewOrderActivity.this, "Its Under Construction", Toast.LENGTH_SHORT).show();
             }
         });
 
