@@ -35,7 +35,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
     @Override
     public void onBindViewHolder(final OrdersViewHolder holder, int position) {
 
-        holder.tvTable.setText("T2");
+        holder.tvTable.setText(itemList.get(position).getTableName());
         holder.tvOrderNo.setText("Order #" + itemList.get(position).getOrderNo());
 //        holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
 

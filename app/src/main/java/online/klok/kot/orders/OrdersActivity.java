@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 import online.klok.kot.floors_tables.FloorsActivity;
 import online.klok.kot.shopping_cart.CartActivity;
@@ -57,10 +58,10 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
     private ArrayList<OrdersPOJO> getOrdersItems() {
         ArrayList<OrdersPOJO> itemList = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < AppKOT.newOrderList.size(); i++) {
             OrdersPOJO ordersPOJO = new OrdersPOJO();
-            ordersPOJO.setName("Item " + (i + 1));
-            ordersPOJO.setOrderNo(i + 1);
+            ordersPOJO.setTableName(AppKOT.newOrderList.get(i).getTableName());
+            ordersPOJO.setOrderNo(AppKOT.newOrderList.get(i).getOrderNo());
             itemList.add(ordersPOJO);
         }
 
