@@ -5,17 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import online.klok.kot.floors_tables.FloorsActivity;
 import online.klok.kot.floors_tables.TablesActivity;
-import online.klok.kot.orders.OrdersPOJO;
 import online.klok.kot.shopping_cart.CartActivity;
 
 public class NewOrderActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = NewOrderActivity.class.getSimpleName();
+
 
     Button btnFloor, btnTable, btnWaiter, btnStartKot, btnSeatGuest;
     EditText etCovers;
@@ -55,6 +60,7 @@ public class NewOrderActivity extends AppCompatActivity {
         btnFloor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(NewOrderActivity.this, FloorsActivity.class);
                 startActivity(intent);
             }
@@ -92,10 +98,26 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                OrdersPOJO ordersPOJO = new OrdersPOJO();
-                ordersPOJO.setCovers(Integer.parseInt(etCovers.getText().toString()));
-                ordersPOJO.setFloorName(btnFloor.getText().toString());
-                ordersPOJO.setTableName(btnTable.getText().toString());
+                ArrayList<NewOrderPOJO> newOrderList = AppKOT.newOrderList;
+
+                NewOrderPOJO newOrderPOJO = new NewOrderPOJO();
+
+                newOrderPOJO.setCovers(Integer.parseInt(etCovers.getText().toString()));
+                newOrderPOJO.setFloorName(btnFloor.getText().toString());
+                newOrderPOJO.setTableName(btnTable.getText().toString());
+
+                if (newOrderPOJO.getOrderNo() < 0) {
+                    newOrderPOJO.setOrderNo(newOrderPOJO.getOrderNo() + 1);
+
+                } else {
+                    newOrderPOJO.setOrderNo(1);
+
+                }
+
+                newOrderList.add(newOrderPOJO);
+                Log.e(LOG_TAG, "OrderNo :" + newOrderPOJO.getOrderNo());
+
+                AppKOT.newOrderList = newOrderList;
 
                 Intent intent = new Intent(NewOrderActivity.this, CartActivity.class);
                 startActivity(intent);
@@ -107,6 +129,8 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(NewOrderActivity.this, "Its Under Construction", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(NewOrderActivity.this, CartActivity.class);
+                startActivity(intent);
             }
         });
 
