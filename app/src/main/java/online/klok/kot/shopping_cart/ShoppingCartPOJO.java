@@ -9,7 +9,7 @@ public class ShoppingCartPOJO {
 
     String name, kitchenNote, type;
     double price;
-    int qty;
+    int qty, kotId;
 
     public String getName() {
         return name;
@@ -49,5 +49,14 @@ public class ShoppingCartPOJO {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+
+    public int getKotId() {
+        return kotId;
+    }
+
+    public void setKotId(int kotId) {
+        this.kotId = kotId;
     }
 }

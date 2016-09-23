@@ -57,12 +57,19 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
     private ArrayList<OrdersPOJO> getOrdersItems() {
         ArrayList<OrdersPOJO> itemList = new ArrayList<>();
+        OrdersPOJO ordersPOJO = new OrdersPOJO();
 
         for (int i = 0; i < AppKOT.newOrderList.size(); i++) {
-            OrdersPOJO ordersPOJO = new OrdersPOJO();
+            ordersPOJO.setCovers(AppKOT.newOrderList.get(i).getCovers());
             ordersPOJO.setTableName(AppKOT.newOrderList.get(i).getTableName());
             ordersPOJO.setOrderNo(AppKOT.newOrderList.get(i).getOrderNo());
             itemList.add(ordersPOJO);
+        }
+
+        for (int i = 0; i < AppKOT.onStartKot.size(); i++) {
+            ordersPOJO.setKotId(AppKOT.onStartKot.get(i).getKotId());
+            itemList.add(ordersPOJO);
+
         }
 
         Log.e(LOG_TAG, "Total items size :" + itemList.size());
