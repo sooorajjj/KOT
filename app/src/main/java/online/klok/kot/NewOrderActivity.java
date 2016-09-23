@@ -106,14 +106,6 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrderPOJO.setFloorName(btnFloor.getText().toString());
                 newOrderPOJO.setTableName(btnTable.getText().toString());
 
-                if (newOrderPOJO.getOrderNo() < 0) {
-                    newOrderPOJO.setOrderNo(newOrderPOJO.getOrderNo() + 1);
-
-                } else {
-                    newOrderPOJO.setOrderNo(1);
-
-                }
-
                 newOrderList.add(newOrderPOJO);
                 Log.e(LOG_TAG, "OrderNo :" + newOrderPOJO.getOrderNo());
 

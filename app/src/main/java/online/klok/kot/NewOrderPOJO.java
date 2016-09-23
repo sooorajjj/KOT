@@ -7,15 +7,21 @@ public class NewOrderPOJO {
 
     public static final String LOG_TAG = "NewOrderPOJO";
 
+    public static int orderNo = 1;
+    private final int count;
     String tableName, floorName;
-    int orderNo, covers;
+    int covers;
 
-    public int getOrderNo() {
-        return orderNo;
+    NewOrderPOJO() {
+        count = orderNo++;
     }
 
-    public void setOrderNo(int orderNo) {
-        this.orderNo = orderNo;
+    public int getOrderNo() {
+        return count;
+    }
+
+    public void setOrderNo(int count) {
+        orderNo = count;
     }
 
     public int getCovers() {
