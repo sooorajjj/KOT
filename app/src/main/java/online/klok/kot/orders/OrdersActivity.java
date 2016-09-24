@@ -55,19 +55,39 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
         rvOrders.setAdapter(new OrdersAdapter(this, getOrdersItems()));
     }
 
-    private ArrayList<OrdersPOJO> getOrdersItems() {
+    private ArrayList<ArrayList<OrdersPOJO>> getOrdersItems() {
+
         ArrayList<OrdersPOJO> itemList = new ArrayList<>();
+        ArrayList<OrdersPOJO> onStartKotList = new ArrayList<>();
+        // Create an ArrayList inside an ArrayList
+        ArrayList<ArrayList<OrdersPOJO>> result = new ArrayList<>();
+
 
         for (int i = 0; i < AppKOT.newOrderList.size(); i++) {
             OrdersPOJO ordersPOJO = new OrdersPOJO();
+            ordersPOJO.setCovers(AppKOT.newOrderList.get(i).getCovers());
             ordersPOJO.setTableName(AppKOT.newOrderList.get(i).getTableName());
             ordersPOJO.setOrderNo(AppKOT.newOrderList.get(i).getOrderNo());
             itemList.add(ordersPOJO);
         }
 
-        Log.e(LOG_TAG, "Total items size :" + itemList.size());
+        for (int j = 0; j < AppKOT.onStartKot.size(); j++) {
+            OrdersPOJO ordersPOJO = new OrdersPOJO();
+            ordersPOJO.setKotId(AppKOT.onStartKot.get(j).getKotId());
+            Log.e(LOG_TAG, "AppKOT:KotId :" + AppKOT.onStartKot.get(j).getKotId());
+            onStartKotList.add(ordersPOJO);
+            Log.e(LOG_TAG, "result:KotId :" + onStartKotList.get(j).getKotId());
 
-        return itemList;
+        }
+
+        Log.e(LOG_TAG, "Total itemList size :" + itemList.size());
+        Log.e(LOG_TAG, "Total onStartKotList size :" + onStartKotList.size());
+
+
+        result.add(itemList); // retrieve this by result.get(0).get(position)
+        result.add(onStartKotList); // retrieve this by result.get(1).get(position)
+
+        return result;
     }
 
     private void newOrder() {

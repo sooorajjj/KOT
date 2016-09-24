@@ -22,8 +22,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import online.klok.kot.AppKOT;
+import online.klok.kot.NewOrderPOJO;
 import online.klok.kot.R;
 import online.klok.kot.orders.OrdersActivity;
+import online.klok.kot.orders.OrdersPOJO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +44,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -136,9 +138,20 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
             @Override
             public void onClick(View view) {
 
+                ArrayList<ShoppingCartPOJO> onStartKot = AppKOT.onStartKot;
+
                 ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
                 shoppingCartPOJO.setType(btnType.getText().toString());
                 shoppingCartPOJO.setKitchenNote(etKitchenNote.getText().toString());
+                shoppingCartPOJO.setKotId(shoppingCartPOJO.count);
+
+                onStartKot.add(shoppingCartPOJO);
+
+                Log.e(LOG_TAG, "KotID :" + shoppingCartPOJO.getKotId());
+
+                AppKOT.onStartKot = onStartKot;
+
+
 
                 Intent intent = new Intent(getActivity(), OrdersActivity.class);
                 startActivity(intent);
