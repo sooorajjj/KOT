@@ -136,19 +136,9 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
             @Override
             public void onClick(View view) {
 
-                ArrayList<ShoppingCartPOJO> onStartkot = AppKOT.onStartKot;
-
                 ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
                 shoppingCartPOJO.setType(btnType.getText().toString());
                 shoppingCartPOJO.setKitchenNote(etKitchenNote.getText().toString());
-                shoppingCartPOJO.setKotId(1);
-
-                onStartkot.add(shoppingCartPOJO);
-
-                Log.e(LOG_TAG, "KOT ID :" + shoppingCartPOJO.getKotId());
-
-                AppKOT.onStartKot = onStartkot;
-
 
                 Intent intent = new Intent(getActivity(), OrdersActivity.class);
                 startActivity(intent);

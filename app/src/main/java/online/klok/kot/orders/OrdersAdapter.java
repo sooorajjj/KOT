@@ -37,8 +37,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
         holder.tvTable.setText(itemList.get(position).getTableName());
         holder.tvOrderNo.setText("Order #" + itemList.get(position).getOrderNo());
-        holder.tvCovers.setText("" + itemList.get(position).getCovers());
-        holder.tvKot.setText("" + itemList.get(position).getKotId());
 //        holder.tvItemPrice.setText("Price :" + itemList.get(position).getPrice());
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -73,15 +71,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
     public class OrdersViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView tvTable, tvOrderNo, tvCovers, tvKot;
+        TextView tvTable, tvOrderNo;
         Button btnNext, btnEdit;
 
         public OrdersViewHolder(View itemView) {
             super(itemView);
             tvTable = (TextView) itemView.findViewById(R.id.tv_table);
             tvOrderNo = (TextView) itemView.findViewById(R.id.tv_order_no);
-            tvCovers = (TextView) itemView.findViewById(R.id.tv_covers);
-            tvKot = (TextView) itemView.findViewById(R.id.tv_kot);
             btnEdit = (Button) itemView.findViewById(R.id.btn_edit);
             btnNext = (Button) itemView.findViewById(R.id.btn_next);
 
