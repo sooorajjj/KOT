@@ -1,4 +1,4 @@
-package online.klok.kot.Database;
+package online.klok.kot.database;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -17,7 +17,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
     //destination path (location) of our database on device
     private static String DB_PATH = "";
-    private static String DB_NAME ="restaurant.db";// Database name
+    private static String DB_NAME ="restaurant.db";// database name
     private SQLiteDatabase mDataBase;
     private final Context mContext;
 
@@ -100,12 +100,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }

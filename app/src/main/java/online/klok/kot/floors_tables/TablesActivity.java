@@ -1,14 +1,21 @@
 package online.klok.kot.floors_tables;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +38,7 @@ import java.util.List;
 import online.klok.kot.NewOrderActivity;
 import online.klok.kot.R;
 import online.klok.kot.models.TableModel;
+import online.klok.kot.settings.SettingsActivity;
 
 public class TablesActivity extends AppCompatActivity implements TablesAdapter.OnTableItemClicked {
 
@@ -42,6 +50,9 @@ public class TablesActivity extends AppCompatActivity implements TablesAdapter.O
     private RecyclerView rvTables;
     private List<TableModel> tableModelList = new ArrayList<>();
     private TablesAdapter adapter;
+    private Button btnSettings;
+    AlertDialog.Builder alert;
+    EditText et_alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,52 @@ public class TablesActivity extends AppCompatActivity implements TablesAdapter.O
 
         tvToolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         tvToolbarTitle.setText("Select Tables");
+
+        alert = new AlertDialog.Builder(this);
+
+        btnSettings = (Button) toolbar.findViewById(R.id.btn_settings);
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                et_alert = new EditText(TablesActivity.this);
+                et_alert.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                alert.setMessage("Admin Password");
+                alert.setTitle("Password");
+
+                alert.setView(et_alert);
+
+
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //What ever you want to do with the value
+
+                        String password = et_alert.getText().toString();
+
+                        if (password.equals("1234"))
+                        {
+                            Intent intent = new Intent(TablesActivity.this, SettingsActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            Toast.makeText(TablesActivity.this, "Wrong Password" , Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alert.show();
+
+            }
+        });
+
 
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
@@ -100,6 +157,7 @@ public class TablesActivity extends AppCompatActivity implements TablesAdapter.O
         intent.putExtra("TableName", name);
         intent.putExtra("FloorName", floorName);
         startActivity(intent);
+        finish();
 
         Toast.makeText(this, "Table Name : " + String.valueOf(name), Toast.LENGTH_SHORT).show();
 

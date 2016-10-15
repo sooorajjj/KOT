@@ -1,0 +1,115 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<SwitchPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="example_switch"-->
+        <!--android:summary="@string/pref_description_social_recommendations"-->
+        <!--android:title="@string/pref_title_social_recommendations" />-->
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <!--<EditTextPreference-->
+        <!--android:capitalize="words"-->
+        <!--android:defaultValue="@string/pref_default_display_name"-->
+        <!--android:inputType="textCapWords"-->
+        <!--android:key="example_text"-->
+        <!--android:maxLines="1"-->
+        <!--android:selectAllOnFocus="true"-->
+        <!--android:singleLine="true"-->
+        <!--android:title="@string/pref_title_display_name" />-->
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/operation_mode_list_titles"
+        android:entryValues="@array/operation_mode_list_values"
+        android:key="operation_mode"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_operation_mode" />
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/paid_mode_list_titles"
+        android:entryValues="@array/paid_mode_list_values"
+        android:key="paid_mode"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_paid_mode" />
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/thermal_printer_list_titles"
+        android:entryValues="@array/thermal_printer_list_values"
+        android:key="thermal_printer"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_thermal_printer" />
+
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/facility_details_list_titles"
+        android:entryValues="@array/facility_details_list_values"
+        android:key="facility_details"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_facility_details" />
+
+
+    <ListPreference
+        android:defaultValue="-1"
+        android:entries="@array/server_mode_list_titles"
+        android:entryValues="@array/server_mode_list_values"
+        android:key="server_mode"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_server_mode" />
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_server_ip_address"
+        android:inputType="textCapWords"
+        android:key="et_server_ip"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_server_ip_address" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ssl_switch"
+        android:summary="@string/pref_description_SSL"
+        android:title="@string/pref_title_SSL" />
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_device_name"
+        android:inputType="textCapWords"
+        android:key="et_device_name"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_device_name" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_device_id"
+        android:inputType="textCapWords"
+        android:key="et_device_id"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_device_id" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/login_mode_list_titles"
+        android:entryValues="@array/login_mode_list_values"
+        android:key="login_mode"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_title_login_mode" />
+
+</PreferenceScreen>

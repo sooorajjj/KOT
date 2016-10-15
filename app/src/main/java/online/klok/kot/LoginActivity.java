@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import online.klok.kot.customAdapters.Floor;
 import online.klok.kot.customAdapters.Order;
+import online.klok.kot.floors_tables.FloorsActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -98,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
             if (mInputText.getText().toString().equals("waiter") && mPasswordText.getText().toString().equals("waiter")) {
-                Intent loginIntent = new Intent(this, Floor.class);
+                Intent loginIntent = new Intent(this, FloorsActivity.class);
                 startActivity(loginIntent);
                 finish();
 

@@ -128,11 +128,9 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(NewOrderActivity.this, "Its Under Construction", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(NewOrderActivity.this, CartActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(NewOrderActivity.this, CartActivity.class);
+//                startActivity(intent);
             }
         });
-
-
     }
 }

@@ -1,4 +1,4 @@
-package online.klok.kot.Database;
+package online.klok.kot.database;
 
 import java.io.IOException;
 import android.content.Context;

@@ -83,6 +83,7 @@ public class FloorsActivity extends AppCompatActivity implements FloorsAdapter.O
         Intent intent = new Intent(this, TablesActivity.class);
         intent.putExtra("FloorId", id);
         startActivity(intent);
+        finish();
 
         Toast.makeText(this, "Floor id : " + String.valueOf(id), Toast.LENGTH_SHORT).show();
 
