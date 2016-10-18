@@ -41,6 +41,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new CategoriesFragment(), "Categories");
         adapter.addFragment(new ItemFragment(), "Items");
         adapter.addFragment(new CartFragment(), "Cart");
         viewPager.setAdapter(adapter);

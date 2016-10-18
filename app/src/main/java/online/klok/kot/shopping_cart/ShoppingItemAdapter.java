@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapter.ShoppingItemViewHolder> {
@@ -39,6 +40,15 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
             @Override
             public void onClick(View view) {
 
+                final ShoppingCartPOJO p = itemList.get(holder.getAdapterPosition());
+                AppKOT.selectedItemDetails.put(p.getItemId(),p);
+
+                if(AppKOT.slectedItemQuantities.containsKey(p.getItemId()))
+                    AppKOT.slectedItemQuantities.put(p.getItemId(),AppKOT.slectedItemQuantities.get(p.getItemId()) + 1.0);
+                else
+                    AppKOT.slectedItemQuantities.put(p.getItemId(),1.0);
+
+//                AppKOT.selectedItemDetails.put(itemList.get(holder.getAdapterPosition()).)
 
                 itemList.get(holder.getAdapterPosition())
                         .setQty(itemList.get(holder.getAdapterPosition()).getQty() + 1);

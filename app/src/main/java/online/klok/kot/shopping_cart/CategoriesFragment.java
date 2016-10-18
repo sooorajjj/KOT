@@ -1,18 +1,18 @@
-package online.klok.kot.customAdapters;
+package online.klok.kot.shopping_cart;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
+
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -30,25 +30,85 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 import online.klok.kot.models.CategoriesModel;
 
-public class Categories extends AppCompatActivity {
 
-    private ListView lvUsers;
+public class CategoriesFragment extends Fragment implements CategoryAdapter.OnCategoriesItemClicked {
+
+    private static final String LOG_TAG = CategoriesFragment.class.getSimpleName();
+
     private ProgressDialog dialog;
+    private RecyclerView  rvCategories;
+    private List<CategoriesModel> categoriesModelList = new ArrayList<>();
+    private CategoryAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub);
-        dialog = new ProgressDialog(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        dialog = new ProgressDialog(getActivity());
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        lvUsers = (ListView) findViewById(R.id.lvUsers);
-        new JSONTask().execute("http://146.185.178.83/resttest/categories");
+        String url = "http://146.185.178.83/resttest/categories/";
+
+        new JSONTask().execute(url);
+
+        rvCategories = (RecyclerView) view.findViewById(R.id.rv_categories);
+        rvCategories.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rvCategories.setAdapter(new CategoryAdapter(this, getCategories()));
+
+        return view;
+    }
+
+    private ArrayList<ShoppingCartPOJO> getCategories() {
+        ArrayList<ShoppingCartPOJO> categoryList = new ArrayList<>();
+
+        for (int i = 0; i < categoriesModelList.size(); i++) {
+            ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
+            shoppingCartPOJO.setCategoryName("" + categoriesModelList.get(i).getName());
+            shoppingCartPOJO.setCategoryId(Integer.parseInt("" + categoriesModelList.get(i).getId()));
+            categoryList.add(shoppingCartPOJO);
+        }
+
+        Log.e(LOG_TAG, "Total items size :" + categoryList.size());
+
+        return categoryList;
+    }
+
+    @Override
+    public void onCategoriesItemClicked(int id) {
+
+
+//        Intent intent = new Intent(getActivity(), ItemFragment.class);
+//        intent.putExtra("CategoryId", id);
+//        startActivity(intent);
+
+//        for (int i = 0; i < categoriesModelList.size(); i++) {
+//            ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
+//            shoppingCartPOJO.setSelectedCategoryId(id);
+//            selectedCategoryList.add(shoppingCartPOJO);
+//        }
+
+
+        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+        for (Fragment f:getFragmentManager().getFragments()) {
+
+            if( f instanceof ItemFragment){
+                ItemFragment itf = (ItemFragment)f;
+                itf.updateItems(String.valueOf(id));
+            }
+
+        }
+        tabLayout.getTabAt(1).select();
+
+
     }
 
     public class JSONTask extends AsyncTask<String, String, List<CategoriesModel>> {
@@ -89,9 +149,9 @@ public class Categories extends AppCompatActivity {
 //                StringBuffer finalBufferData = new StringBuffer();
                 // for loop so it fetch all the json_object in the json_array
 
-                List<CategoriesModel> categoriesModelList = new ArrayList<>();
 
                 Gson gson = new Gson();
+                categoriesModelList.clear();
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     CategoriesModel categoriesModel = gson.fromJson(finalObject.toString(), CategoriesModel.class);
@@ -123,61 +183,12 @@ public class Categories extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<CategoriesModel> result) {
             super.onPostExecute(result);
-            dialog.dismiss();
-            CategoriesAdapter adapter = new CategoriesAdapter(getApplicationContext(), R.layout.row_categories, result);
-            lvUsers.setAdapter(adapter);
-        }
-    }
-
-    public class CategoriesAdapter extends ArrayAdapter {
-
-        public List<CategoriesModel> categoriesModelList;
-        private int resource;
-        private LayoutInflater inflater;
-
-        public CategoriesAdapter(Context context, int resource, List<CategoriesModel> objects) {
-            super(context, resource, objects);
-            categoriesModelList = objects;
-            this.resource = resource;
-            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder holder = null;
-
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = inflater.inflate(resource, null);
-                holder.clickLayout = (LinearLayout) convertView.findViewById(R.id.clickLayout);
-                holder.tvCategoryName = (TextView) convertView.findViewById(R.id.tvCategoryName);
-                holder.tvShortName = (TextView) convertView.findViewById(R.id.tvShortName);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
             }
-
-            holder.tvCategoryName.setText(categoriesModelList.get(position).getName());
-            holder.tvShortName.setText(categoriesModelList.get(position).getShortName());
-            final int categoriesId = categoriesModelList.get(position).getId();
-            holder.clickLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Categories.this, SubCategories.class);
-                    intent.putExtra("parameter_name", categoriesId);
-                    startActivity(intent);
-                }
-            });
-            return convertView;
-        }
-
-        class ViewHolder {
-            private LinearLayout clickLayout;
-            private TextView tvCategoryName;
-            private TextView tvShortName;
-
+            adapter = new CategoryAdapter(CategoriesFragment.this, getCategories());
+            rvCategories.setAdapter(adapter);
         }
     }
 }
+

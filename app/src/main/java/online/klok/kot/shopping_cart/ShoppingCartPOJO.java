@@ -7,9 +7,10 @@ public class ShoppingCartPOJO {
     public static final String LOG_TAG = "ShoppingCartPOJO";
 
 
-    String name, kitchenNote, type;
+    String name, kitchenNote, type, categoryName, itemId;
     double price;
-    int qty;
+    double qty;
+            int categoryId, selectedCategoryId;
 
     public static int kotId;
     int count;
@@ -22,6 +23,29 @@ public class ShoppingCartPOJO {
         } else {
             count = kotId;
         }
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getSelectedCategoryId() {
+        return selectedCategoryId;
+    }
+
+    public void setSelectedCategoryId(int selectedCategoryId) {
+        this.selectedCategoryId = selectedCategoryId;
     }
 
     public void setKotId(int count) {
@@ -56,6 +80,15 @@ public class ShoppingCartPOJO {
         this.type = type;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+
     public double getPrice() {
         return price;
     }
@@ -64,11 +97,12 @@ public class ShoppingCartPOJO {
         this.price = price;
     }
 
-    public int getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(Double qty) {
         this.qty = qty;
     }
+
 }

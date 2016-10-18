@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import online.klok.kot.AppKOT;
 import online.klok.kot.R;
@@ -34,7 +35,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
     private RecyclerView rvShoppingCart;
     private TextView tvTotalItems, tvTotalPrice, tvTotalCartAmt, tvType, tvNoCartItems;
-    private int currentCartCount;
+    private double currentCartCount;
     private double currentTotalPrice;
     private EditText etKitchenNote;
     private Button btnSendToKitchen, btnType;
@@ -181,17 +182,26 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
     private ArrayList<ShoppingCartPOJO> getShoppingCartItems() {
 
+/*
+        for (int i = 0; i < AppKOT.slectedItemQuantities.size(); i++) {
 
-        for (int i = 0; i < AppKOT.cartItemSelected.size(); i++) {
-
-            ShoppingCartPOJO shoppingCartPOJO = AppKOT.cartItemSelected.get(i);
+            final ShoppingCartPOJO shoppingCartPOJO = AppKOT.cartItemSelected.get(i);
 
 
             currentCartCount = currentCartCount + shoppingCartPOJO.getQty();
             currentTotalPrice = currentTotalPrice + (shoppingCartPOJO.getQty() * shoppingCartPOJO.getPrice());
 
         }
+*/
+        Set<String> itemKeys = AppKOT.slectedItemQuantities.keySet();
 
+        for (String key : itemKeys)
+        {
+            currentCartCount += AppKOT.slectedItemQuantities.get(key);
+            AppKOT.selectedItemDetails.get(key).setQty(AppKOT.slectedItemQuantities.get(key));
+            currentTotalPrice += AppKOT.slectedItemQuantities.get(key) * AppKOT.selectedItemDetails.get(key).getPrice();
+
+        }
 
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
@@ -199,7 +209,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         Log.e(LOG_TAG, "Total items size :" + AppKOT.cartItemSelected.size());
 
-        return AppKOT.cartItemSelected;
+        return new ArrayList<ShoppingCartPOJO>(AppKOT.selectedItemDetails.values());
     }
 
 

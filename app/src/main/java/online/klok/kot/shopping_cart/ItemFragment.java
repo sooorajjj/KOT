@@ -43,13 +43,16 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
 
     private static final String LOG_TAG = ItemFragment.class.getSimpleName();
     public EditText etSearch;
-    private RecyclerView rvShoppingCart;
+    private RecyclerView itemListView;
     private TextView tvTotalItems, tvTotalPrice;
+//    int categoryId;
     private int currentCartCount;
     private double currentTotalPrice;
     private ProgressDialog dialog;
     private List<ItemModel> itemModelList = new ArrayList<>();
     private ShoppingItemAdapter adapter;
+    String selectedId ;
+    String url;
 
 
     @Override
@@ -64,8 +67,11 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
 
-        String url = "http://146.185.178.83/resttest/item/";
-        new JSONTask().execute(url);
+//        Intent intent = getActivity().getIntent();
+//        categoryId = intent.getIntExtra("CategoryId", 1);
+
+
+
         tvTotalItems = (TextView) view.findViewById(R.id.tv_total_items);
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
 
@@ -74,21 +80,24 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         tvTotalItems.setText("Total Item : " + currentCartCount);
         tvTotalPrice.setText("Total Price : " + currentTotalPrice);
 
-        rvShoppingCart = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
-        rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvShoppingCart.setAdapter(new ShoppingItemAdapter(this, getShoppingCartItems()));
+        itemListView = (RecyclerView) view.findViewById(R.id.rv_shopping_cart);
+        itemListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        itemListView.setAdapter(new ShoppingItemAdapter(this, getItems()));
+
 
         addTextListener();
+        updateItems("");
 
         return view;
     }
 
-    private ArrayList<ShoppingCartPOJO> getShoppingCartItems() {
+    private ArrayList<ShoppingCartPOJO> getItems() {
         ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
 
         for (int i = 0; i < itemModelList.size(); i++) {
             ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
             shoppingCartPOJO.setName("" + itemModelList.get(i).getItemName());
+            shoppingCartPOJO.setItemId("" + itemModelList.get(i).getItemId());
             shoppingCartPOJO.setPrice(Double.parseDouble(itemModelList.get(i).getSalesRate()));
             itemList.add(shoppingCartPOJO);
         }
@@ -126,14 +135,40 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
                     }
                 }
 
-                rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                itemListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 adapter = new ShoppingItemAdapter(ItemFragment.this, filteredList);
-                rvShoppingCart.setAdapter(adapter);
+                itemListView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
             }
 
         });
+    }
+
+    public void updateItems(String CategoryId){
+        Log.e(LOG_TAG, "Updated items");
+
+
+
+        if (CategoryId.length() != 0) {
+
+
+            url = "http://146.185.178.83/resttest/categories/" + CategoryId + "/items/";
+
+//            itemModelList.clear();
+//            itemListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+//            itemListView.setAdapter(new ShoppingItemAdapter(this, getItems()));
+//            adapter.notifyDataSetChanged();
+
+        }else {
+
+            url = "http://146.185.178.83/resttest/item/";
+        }
+
+        new JSONTask().execute(url);
+
+
+
     }
 
     @Override
@@ -188,6 +223,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
                 // for loop so it fetch all the json_object in the json_array
 
                 Gson gson = new Gson();
+                itemModelList.clear();
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     ItemModel itemModel = gson.fromJson(finalObject.toString(), ItemModel.class);
@@ -222,8 +258,8 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            adapter = new ShoppingItemAdapter(ItemFragment.this, getShoppingCartItems());
-            rvShoppingCart.setAdapter(adapter);
+            adapter = new ShoppingItemAdapter(ItemFragment.this, getItems());
+            itemListView.setAdapter(adapter);
         }
     }
 
