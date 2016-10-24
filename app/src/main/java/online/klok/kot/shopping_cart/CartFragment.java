@@ -24,6 +24,7 @@ import java.util.Set;
 
 import online.klok.kot.AppKOT;
 import online.klok.kot.R;
+import online.klok.kot.orders.Orders;
 import online.klok.kot.orders.OrdersActivity;
 
 /**
@@ -170,8 +171,10 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
                 AppKOT.onStartKot = onStartKot;
 
+                AppKOT.slectedItemQuantities.clear();
+                AppKOT.selectedItemDetails.clear();
 
-                Intent intent = new Intent(getActivity(), OrdersActivity.class);
+                Intent intent = new Intent(getActivity(), Orders.class);
                 startActivity(intent);
 
             }
@@ -193,6 +196,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         }
 */
+
         Set<String> itemKeys = AppKOT.slectedItemQuantities.keySet();
 
         for (String key : itemKeys)
@@ -203,13 +207,19 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
         }
 
-        tvTotalItems.setText("Total Item : " + currentCartCount);
-        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
-        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
 
+//        if (currentCartCount && currentTotalPrice) {
+            tvTotalItems.setText("Total Item : " + currentCartCount);
+            tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+            tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
+//        }
         Log.e(LOG_TAG, "Total items size :" + AppKOT.cartItemSelected.size());
 
-        return new ArrayList<ShoppingCartPOJO>(AppKOT.selectedItemDetails.values());
+        if (AppKOT.selectedItemDetails.size() > 0){
+            return new ArrayList<ShoppingCartPOJO>(AppKOT.selectedItemDetails.values());
+
+        }
+        return new ArrayList<ShoppingCartPOJO>();
     }
 
 

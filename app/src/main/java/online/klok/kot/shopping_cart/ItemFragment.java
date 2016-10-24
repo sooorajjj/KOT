@@ -45,13 +45,11 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
     public EditText etSearch;
     private RecyclerView itemListView;
     private TextView tvTotalItems, tvTotalPrice;
-//    int categoryId;
     private int currentCartCount;
     private double currentTotalPrice;
     private ProgressDialog dialog;
     private List<ItemModel> itemModelList = new ArrayList<>();
     private ShoppingItemAdapter adapter;
-    String selectedId ;
     String url;
 
 
@@ -66,11 +64,6 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Loading, please wait.....");
-
-//        Intent intent = getActivity().getIntent();
-//        categoryId = intent.getIntExtra("CategoryId", 1);
-
-
 
         tvTotalItems = (TextView) view.findViewById(R.id.tv_total_items);
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
@@ -130,6 +123,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
                     if (text.contains(charSequence)) {
                         ShoppingCartPOJO shoppingCartPOJO = new ShoppingCartPOJO();
                         shoppingCartPOJO.setName("" + itemModelList.get(j).getItemName());
+                        shoppingCartPOJO.setItemId("" + itemModelList.get(i).getItemId());
                         shoppingCartPOJO.setPrice(Double.parseDouble(itemModelList.get(j).getSalesRate()));
                         filteredList.add(shoppingCartPOJO);
                     }
@@ -148,17 +142,9 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
     public void updateItems(String CategoryId){
         Log.e(LOG_TAG, "Updated items");
 
-
-
         if (CategoryId.length() != 0) {
 
-
             url = "http://146.185.178.83/resttest/categories/" + CategoryId + "/items/";
-
-//            itemModelList.clear();
-//            itemListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//            itemListView.setAdapter(new ShoppingItemAdapter(this, getItems()));
-//            adapter.notifyDataSetChanged();
 
         }else {
 

@@ -7,8 +7,8 @@ public class OrdersPOJO {
 
     public static final String LOG_TAG = "OrdersPOJO";
 
-    String name, tableName, floorName;
-    int orderNo, covers, kotId;
+    String name, tableName, floorName, orderNo;
+    int  covers, kotId;
 
     public int getKotId() {
         return kotId;
@@ -26,11 +26,11 @@ public class OrdersPOJO {
         this.name = name;
     }
 
-    public int getOrderNo() {
+    public String getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(int orderNo) {
+    public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 

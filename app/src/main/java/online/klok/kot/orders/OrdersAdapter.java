@@ -20,14 +20,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
     private final OnOrdersItemClicked callBack;
 
-//    private ArrayList<OrdersPOJO> itemList = new ArrayList<>();
+    private ArrayList<OrdersPOJO> itemList = new ArrayList<>();
 //
 //    private ArrayList<OrdersPOJO> onStartKotList = new ArrayList<>();
 
-    private ArrayList<ArrayList<OrdersPOJO>> result = new ArrayList<>();
+//    private ArrayList<ArrayList<OrdersPOJO>> result = new ArrayList<>();
 
-    public OrdersAdapter(OnOrdersItemClicked callBack, ArrayList<ArrayList<OrdersPOJO>> result) {
-        this.result = result;
+    public OrdersAdapter(OnOrdersItemClicked callBack, ArrayList<OrdersPOJO> itemList) {
+        this.itemList = itemList;
         this.callBack = callBack;
     }
 
@@ -40,17 +40,17 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
     @Override
     public void onBindViewHolder(final OrdersViewHolder holder, int position) {
 
-        final int kotId;
-        if (AppKOT.onStartKot.size() > 0) {
-            kotId = result.get(1).get(position).getKotId();
-        } else {
-            kotId = result.get(0).get(position).getKotId();
-        }
+//        final int kotId;
+//        if (AppKOT.onStartKot.size() > 0) {
+//            kotId = result.get(1).get(position).getKotId();
+//        } else {
+//            kotId = result.get(0).get(position).getKotId();
+//        }
 
-        holder.tvTable.setText(result.get(0).get(position).getTableName());
-        holder.tvOrderNo.setText("Order #" + result.get(0).get(position).getOrderNo());
-        holder.tvCovers.setText("" + result.get(0).get(position).getCovers());
-        holder.tvKot.setText("" + kotId);
+//        holder.tvTable.setText(itemList.get(position).getTableName());
+        holder.tvOrderNo.setText("Order #" + itemList.get(position).getOrderNo());
+//        holder.tvCovers.setText("" + itemList.get(position).getCovers());
+//        holder.tvKot.setText("" + kotId);
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrdersView
 
     @Override
     public int getItemCount() {
-        return result.get(0).size(); // Same as itemList.size();
+        return itemList.size(); // Same as itemList.size();
     }
 
 

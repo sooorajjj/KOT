@@ -52,7 +52,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
 
         rvOrders = (RecyclerView) findViewById(R.id.rv_orders);
         rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvOrders.setAdapter(new OrdersAdapter(this, getOrdersItems()));
+//        rvOrders.setAdapter(new OrdersAdapter(this, getOrdersItems()));
     }
 
     private ArrayList<ArrayList<OrdersPOJO>> getOrdersItems() {
@@ -76,7 +76,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
                 OrdersPOJO ordersPOJO = new OrdersPOJO();
                 ordersPOJO.setCovers(AppKOT.newOrderList.get(i).getCovers());
                 ordersPOJO.setTableName(AppKOT.newOrderList.get(i).getTableName());
-                ordersPOJO.setOrderNo(AppKOT.newOrderList.get(i).getOrderNo());
+                ordersPOJO.setOrderNo(String.valueOf(AppKOT.newOrderList.get(i).getOrderNo()));
                 itemList.add(ordersPOJO);
             }
 
@@ -85,7 +85,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersAdapter.O
                 OrdersPOJO ordersPOJO = new OrdersPOJO();
                 ordersPOJO.setCovers(AppKOT.newOrderList.get(i).getCovers());
                 ordersPOJO.setTableName(AppKOT.newOrderList.get(i).getTableName());
-                ordersPOJO.setOrderNo(AppKOT.newOrderList.get(i).getOrderNo());
+                ordersPOJO.setOrderNo(String.valueOf(AppKOT.newOrderList.get(i).getOrderNo()));
                 ordersPOJO.setKotId(AppKOT.newOrderList.get(i).getKotId());
                 itemList.add(ordersPOJO);
                 Log.e(LOG_TAG, "AppKOT.newOrderList :" + AppKOT.newOrderList.get(i).getKotId());
