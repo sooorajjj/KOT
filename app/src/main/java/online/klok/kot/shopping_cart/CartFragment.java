@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,22 +26,20 @@ import java.util.Set;
 import online.klok.kot.AppKOT;
 import online.klok.kot.R;
 import online.klok.kot.orders.Orders;
-import online.klok.kot.orders.OrdersActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShoppingCartItemClicked {
 
     private static final String LOG_TAG = CartFragment.class.getSimpleName();
 
     private RecyclerView rvShoppingCart;
     private TextView tvTotalItems, tvTotalPrice, tvTotalCartAmt, tvType, tvNoCartItems;
-    private double currentCartCount;
-    private double currentTotalPrice;
+    private double currentCartCount = 0.0;
+    private double currentTotalPrice = 0.0;
     private EditText etKitchenNote;
     private Button btnSendToKitchen, btnType;
     private ShoppingCartAdapter adapter;
+    ArrayList<ShoppingCartPOJO> adapterData = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +64,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
         tvNoCartItems = (TextView) view.findViewById(R.id.tvNoCartItems);
 
         // Make the Views Disappear When there is no item in Cart
-        tvTotalCartAmt.addTextChangedListener(new TextWatcher() {
+        /*tvTotalCartAmt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -103,7 +102,7 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
 
             }
-        });
+        });*/
 
 
         // Setting Views
@@ -113,7 +112,8 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
 
 
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        adapter = new ShoppingCartAdapter(this, getShoppingCartItems());
+        adapterData.addAll(getShoppingCartItems());
+        adapter = new ShoppingCartAdapter(this, adapterData);
         rvShoppingCart.setAdapter(adapter);
 
 
@@ -206,13 +206,12 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
             currentTotalPrice += AppKOT.slectedItemQuantities.get(key) * AppKOT.selectedItemDetails.get(key).getPrice();
 
         }
-
-
-//        if (currentCartCount && currentTotalPrice) {
-            tvTotalItems.setText("Total Item : " + currentCartCount);
-            tvTotalPrice.setText("Total Price : " + currentTotalPrice);
-            tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
-//        }
+/*
+if(isVisible()) {
+    tvTotalItems.setText("Total Item : " + currentCartCount);
+    tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+    tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
+}*/
         Log.e(LOG_TAG, "Total items size :" + AppKOT.cartItemSelected.size());
 
         if (AppKOT.selectedItemDetails.size() > 0){
@@ -226,27 +225,43 @@ public class CartFragment extends Fragment implements ShoppingCartAdapter.OnShop
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            currentCartCount = 0;
-            currentTotalPrice = 0;
-            adapter = new ShoppingCartAdapter(this, getShoppingCartItems());
-            rvShoppingCart.setAdapter(adapter);
-        }
+
+//        if (isVisibleToUser) {
+//            currentCartCount = 0;
+//            currentTotalPrice = 0;
+//            adapter = new ShoppingCartAdapter(this, getShoppingCartItems());
+//            rvShoppingCart.setAdapter(adapter);
+//        }
     }
 
     @Override
     public void onShoppingItemQtyChanged() {
-        ArrayList<ShoppingCartPOJO> itemInCart = adapter.getAllItemsAdded();
-        currentCartCount = 0;
-        currentTotalPrice = 0;
-        for (ShoppingCartPOJO shoppingCartPOJO : itemInCart) {
-            currentCartCount = currentCartCount + shoppingCartPOJO.getQty();
-            currentTotalPrice = currentTotalPrice + (shoppingCartPOJO.getQty() * shoppingCartPOJO.getPrice());
-        }
+//        ArrayList<ShoppingCartPOJO> itemInCart = adapter.getAllItemsAdded();
+//        currentCartCount = 0;
+//        currentTotalPrice = 0;
+//        for (ShoppingCartPOJO shoppingCartPOJO : itemInCart) {
+//            currentCartCount = currentCartCount + shoppingCartPOJO.getQty();
+//            currentTotalPrice = currentTotalPrice + (shoppingCartPOJO.getQty() * shoppingCartPOJO.getPrice());
+//        }
+//
+//        tvTotalItems.setText("Total Item : " + currentCartCount);
+//        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
+//        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
 
-        tvTotalItems.setText("Total Item : " + currentCartCount);
-        tvTotalPrice.setText("Total Price : " + currentTotalPrice);
-        tvTotalCartAmt.setText("Total: ₹" + currentTotalPrice);
+
+
+        if(adapter != null)
+        {
+            adapterData.clear();
+            adapterData.addAll(getShoppingCartItems());
+            adapter.notifyDataSetChanged();
+        }
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+
+    }
 }

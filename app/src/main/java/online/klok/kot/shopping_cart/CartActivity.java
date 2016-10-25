@@ -37,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -56,8 +57,14 @@ public class CartActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
+
             return mFragmentList.get(position);
+
+
         }
+
+
 
         @Override
         public int getCount() {
@@ -65,6 +72,7 @@ public class CartActivity extends AppCompatActivity {
         }
 
         public void addFragment(Fragment fragment, String title) {
+
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

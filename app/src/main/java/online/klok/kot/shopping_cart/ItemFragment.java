@@ -85,6 +85,9 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
     }
 
     private ArrayList<ShoppingCartPOJO> getItems() {
+
+
+
         ArrayList<ShoppingCartPOJO> itemList = new ArrayList<>();
 
         for (int i = 0; i < itemModelList.size(); i++) {
@@ -99,6 +102,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
 
         return itemList;
     }
+
 
     public void addTextListener() {
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -132,7 +136,7 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
                 itemListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 adapter = new ShoppingItemAdapter(ItemFragment.this, filteredList);
                 itemListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+               // adapter.notifyDataSetChanged();
 
             }
 
@@ -159,6 +163,15 @@ public class ItemFragment extends Fragment implements ShoppingItemAdapter.OnShop
 
     @Override
     public void onShoppingCartAddClicked(double price) {
+
+        for (Fragment f :getFragmentManager().getFragments()
+             ) {
+
+            if(f instanceof  CartFragment){
+                ((CartFragment)f).onShoppingItemQtyChanged();
+            }
+
+        }
 
         currentCartCount = currentCartCount + 1;
         currentTotalPrice = currentTotalPrice + price;
